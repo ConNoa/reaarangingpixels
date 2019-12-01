@@ -48,10 +48,10 @@ RM = /usr/local/Cellar/cmake/3.15.5/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/Blueshift/git/rand_pixel_sampling
+CMAKE_SOURCE_DIR = /Users/Blueshift/git/reaarangingpixels
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/Blueshift/git/rand_pixel_sampling/build
+CMAKE_BINARY_DIR = /Users/Blueshift/git/reaarangingpixels/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles /Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Blueshift/git/reaarangingpixels/build/CMakeFiles /Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/Blueshift/git/reaarangingpixels/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named allfred
+
+# Build rule for target.
+allfred: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 allfred
+.PHONY : allfred
+
+# fast build rule for target.
+allfred/fast:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/build
+.PHONY : allfred/fast
+
+#=============================================================================
 # Target rules for targets named sample_example
 
 # Build rule for target.
@@ -123,12 +136,40 @@ sample_example/fast:
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/build
 .PHONY : sample_example/fast
 
+source/allfred.o: source/allfred.cpp.o
+
+.PHONY : source/allfred.o
+
+# target to build an object file
+source/allfred.cpp.o:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/allfred.cpp.o
+.PHONY : source/allfred.cpp.o
+
+source/allfred.i: source/allfred.cpp.i
+
+.PHONY : source/allfred.i
+
+# target to preprocess a source file
+source/allfred.cpp.i:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/allfred.cpp.i
+.PHONY : source/allfred.cpp.i
+
+source/allfred.s: source/allfred.cpp.s
+
+.PHONY : source/allfred.s
+
+# target to generate assembly for a file
+source/allfred.cpp.s:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/allfred.cpp.s
+.PHONY : source/allfred.cpp.s
+
 source/evaluation/evaluate.o: source/evaluation/evaluate.cpp.o
 
 .PHONY : source/evaluation/evaluate.o
 
 # target to build an object file
 source/evaluation/evaluate.cpp.o:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/evaluation/evaluate.cpp.o
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o
 .PHONY : source/evaluation/evaluate.cpp.o
 
@@ -138,6 +179,7 @@ source/evaluation/evaluate.i: source/evaluation/evaluate.cpp.i
 
 # target to preprocess a source file
 source/evaluation/evaluate.cpp.i:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/evaluation/evaluate.cpp.i
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.i
 .PHONY : source/evaluation/evaluate.cpp.i
 
@@ -147,6 +189,7 @@ source/evaluation/evaluate.s: source/evaluation/evaluate.cpp.s
 
 # target to generate assembly for a file
 source/evaluation/evaluate.cpp.s:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/evaluation/evaluate.cpp.s
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.s
 .PHONY : source/evaluation/evaluate.cpp.s
 
@@ -156,6 +199,7 @@ source/interpretation/interpret.o: source/interpretation/interpret.cpp.o
 
 # target to build an object file
 source/interpretation/interpret.cpp.o:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/interpretation/interpret.cpp.o
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o
 .PHONY : source/interpretation/interpret.cpp.o
 
@@ -165,6 +209,7 @@ source/interpretation/interpret.i: source/interpretation/interpret.cpp.i
 
 # target to preprocess a source file
 source/interpretation/interpret.cpp.i:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/interpretation/interpret.cpp.i
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.i
 .PHONY : source/interpretation/interpret.cpp.i
 
@@ -174,6 +219,7 @@ source/interpretation/interpret.s: source/interpretation/interpret.cpp.s
 
 # target to generate assembly for a file
 source/interpretation/interpret.cpp.s:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/interpretation/interpret.cpp.s
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.s
 .PHONY : source/interpretation/interpret.cpp.s
 
@@ -183,6 +229,7 @@ source/pixel.o: source/pixel.cpp.o
 
 # target to build an object file
 source/pixel.cpp.o:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/pixel.cpp.o
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/pixel.cpp.o
 .PHONY : source/pixel.cpp.o
 
@@ -192,6 +239,7 @@ source/pixel.i: source/pixel.cpp.i
 
 # target to preprocess a source file
 source/pixel.cpp.i:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/pixel.cpp.i
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/pixel.cpp.i
 .PHONY : source/pixel.cpp.i
 
@@ -201,6 +249,7 @@ source/pixel.s: source/pixel.cpp.s
 
 # target to generate assembly for a file
 source/pixel.cpp.s:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/pixel.cpp.s
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/pixel.cpp.s
 .PHONY : source/pixel.cpp.s
 
@@ -237,6 +286,7 @@ source/sampling/sample.o: source/sampling/sample.cpp.o
 
 # target to build an object file
 source/sampling/sample.cpp.o:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/sampling/sample.cpp.o
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o
 .PHONY : source/sampling/sample.cpp.o
 
@@ -246,6 +296,7 @@ source/sampling/sample.i: source/sampling/sample.cpp.i
 
 # target to preprocess a source file
 source/sampling/sample.cpp.i:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/sampling/sample.cpp.i
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/sampling/sample.cpp.i
 .PHONY : source/sampling/sample.cpp.i
 
@@ -255,6 +306,7 @@ source/sampling/sample.s: source/sampling/sample.cpp.s
 
 # target to generate assembly for a file
 source/sampling/sample.cpp.s:
+	$(MAKE) -f CMakeFiles/allfred.dir/build.make CMakeFiles/allfred.dir/source/sampling/sample.cpp.s
 	$(MAKE) -f CMakeFiles/sample_example.dir/build.make CMakeFiles/sample_example.dir/source/sampling/sample.cpp.s
 .PHONY : source/sampling/sample.cpp.s
 
@@ -266,7 +318,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... allfred"
 	@echo "... sample_example"
+	@echo "... source/allfred.o"
+	@echo "... source/allfred.i"
+	@echo "... source/allfred.s"
 	@echo "... source/evaluation/evaluate.o"
 	@echo "... source/evaluation/evaluate.i"
 	@echo "... source/evaluation/evaluate.s"

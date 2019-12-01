@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++14  -isysroot /Applications/Xcode.app/Contents/Developer/Pla
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/Blueshift/git/rand_pixel_sampling/include -isystem /usr/local/Cellar/opencv/4.1.2/include/opencv4 
+CXX_INCLUDES = -I/Users/Blueshift/git/reaarangingpixels/include -isystem /usr/local/Cellar/opencv/4.1.2/include/opencv4 
 

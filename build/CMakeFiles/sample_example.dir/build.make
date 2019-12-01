@@ -43,10 +43,10 @@ RM = /usr/local/Cellar/cmake/3.15.5/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/Blueshift/git/rand_pixel_sampling
+CMAKE_SOURCE_DIR = /Users/Blueshift/git/reaarangingpixels
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/Blueshift/git/rand_pixel_sampling/build
+CMAKE_BINARY_DIR = /Users/Blueshift/git/reaarangingpixels/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/sample_example.dir/depend.make
@@ -59,68 +59,68 @@ include CMakeFiles/sample_example.dir/flags.make
 
 CMakeFiles/sample_example.dir/source/sample_example.cpp.o: CMakeFiles/sample_example.dir/flags.make
 CMakeFiles/sample_example.dir/source/sample_example.cpp.o: ../source/sample_example.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sample_example.dir/source/sample_example.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/sample_example.cpp.o -c /Users/Blueshift/git/rand_pixel_sampling/source/sample_example.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sample_example.dir/source/sample_example.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/sample_example.cpp.o -c /Users/Blueshift/git/reaarangingpixels/source/sample_example.cpp
 
 CMakeFiles/sample_example.dir/source/sample_example.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sample_example.dir/source/sample_example.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/rand_pixel_sampling/source/sample_example.cpp > CMakeFiles/sample_example.dir/source/sample_example.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/reaarangingpixels/source/sample_example.cpp > CMakeFiles/sample_example.dir/source/sample_example.cpp.i
 
 CMakeFiles/sample_example.dir/source/sample_example.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sample_example.dir/source/sample_example.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/rand_pixel_sampling/source/sample_example.cpp -o CMakeFiles/sample_example.dir/source/sample_example.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/reaarangingpixels/source/sample_example.cpp -o CMakeFiles/sample_example.dir/source/sample_example.cpp.s
 
 CMakeFiles/sample_example.dir/source/pixel.cpp.o: CMakeFiles/sample_example.dir/flags.make
 CMakeFiles/sample_example.dir/source/pixel.cpp.o: ../source/pixel.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sample_example.dir/source/pixel.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/pixel.cpp.o -c /Users/Blueshift/git/rand_pixel_sampling/source/pixel.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sample_example.dir/source/pixel.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/pixel.cpp.o -c /Users/Blueshift/git/reaarangingpixels/source/pixel.cpp
 
 CMakeFiles/sample_example.dir/source/pixel.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sample_example.dir/source/pixel.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/rand_pixel_sampling/source/pixel.cpp > CMakeFiles/sample_example.dir/source/pixel.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/reaarangingpixels/source/pixel.cpp > CMakeFiles/sample_example.dir/source/pixel.cpp.i
 
 CMakeFiles/sample_example.dir/source/pixel.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sample_example.dir/source/pixel.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/rand_pixel_sampling/source/pixel.cpp -o CMakeFiles/sample_example.dir/source/pixel.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/reaarangingpixels/source/pixel.cpp -o CMakeFiles/sample_example.dir/source/pixel.cpp.s
 
 CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o: CMakeFiles/sample_example.dir/flags.make
 CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o: ../source/sampling/sample.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o -c /Users/Blueshift/git/rand_pixel_sampling/source/sampling/sample.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o -c /Users/Blueshift/git/reaarangingpixels/source/sampling/sample.cpp
 
 CMakeFiles/sample_example.dir/source/sampling/sample.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sample_example.dir/source/sampling/sample.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/rand_pixel_sampling/source/sampling/sample.cpp > CMakeFiles/sample_example.dir/source/sampling/sample.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/reaarangingpixels/source/sampling/sample.cpp > CMakeFiles/sample_example.dir/source/sampling/sample.cpp.i
 
 CMakeFiles/sample_example.dir/source/sampling/sample.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sample_example.dir/source/sampling/sample.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/rand_pixel_sampling/source/sampling/sample.cpp -o CMakeFiles/sample_example.dir/source/sampling/sample.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/reaarangingpixels/source/sampling/sample.cpp -o CMakeFiles/sample_example.dir/source/sampling/sample.cpp.s
 
 CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o: CMakeFiles/sample_example.dir/flags.make
 CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o: ../source/interpretation/interpret.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o -c /Users/Blueshift/git/rand_pixel_sampling/source/interpretation/interpret.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o -c /Users/Blueshift/git/reaarangingpixels/source/interpretation/interpret.cpp
 
 CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/rand_pixel_sampling/source/interpretation/interpret.cpp > CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/reaarangingpixels/source/interpretation/interpret.cpp > CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.i
 
 CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/rand_pixel_sampling/source/interpretation/interpret.cpp -o CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/reaarangingpixels/source/interpretation/interpret.cpp -o CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.s
 
 CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o: CMakeFiles/sample_example.dir/flags.make
 CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o: ../source/evaluation/evaluate.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o -c /Users/Blueshift/git/rand_pixel_sampling/source/evaluation/evaluate.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o -c /Users/Blueshift/git/reaarangingpixels/source/evaluation/evaluate.cpp
 
 CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/rand_pixel_sampling/source/evaluation/evaluate.cpp > CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/Blueshift/git/reaarangingpixels/source/evaluation/evaluate.cpp > CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.i
 
 CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/rand_pixel_sampling/source/evaluation/evaluate.cpp -o CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/Blueshift/git/reaarangingpixels/source/evaluation/evaluate.cpp -o CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.s
 
 # Object files for target sample_example
 sample_example_OBJECTS = \
@@ -155,7 +155,7 @@ sample_example: /usr/local/lib/libopencv_flann.4.1.2.dylib
 sample_example: /usr/local/lib/libopencv_imgproc.4.1.2.dylib
 sample_example: /usr/local/lib/libopencv_core.4.1.2.dylib
 sample_example: CMakeFiles/sample_example.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable sample_example"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable sample_example"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sample_example.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -168,6 +168,6 @@ CMakeFiles/sample_example.dir/clean:
 .PHONY : CMakeFiles/sample_example.dir/clean
 
 CMakeFiles/sample_example.dir/depend:
-	cd /Users/Blueshift/git/rand_pixel_sampling/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/Blueshift/git/rand_pixel_sampling /Users/Blueshift/git/rand_pixel_sampling /Users/Blueshift/git/rand_pixel_sampling/build /Users/Blueshift/git/rand_pixel_sampling/build /Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/sample_example.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/Blueshift/git/reaarangingpixels/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/Blueshift/git/reaarangingpixels /Users/Blueshift/git/reaarangingpixels /Users/Blueshift/git/reaarangingpixels/build /Users/Blueshift/git/reaarangingpixels/build /Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/sample_example.dir/depend
 

@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/Blueshift/git/rand_pixel_sampling/source/evaluation/evaluate.cpp" "/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o"
-  "/Users/Blueshift/git/rand_pixel_sampling/source/interpretation/interpret.cpp" "/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o"
-  "/Users/Blueshift/git/rand_pixel_sampling/source/pixel.cpp" "/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/sample_example.dir/source/pixel.cpp.o"
-  "/Users/Blueshift/git/rand_pixel_sampling/source/sample_example.cpp" "/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/sample_example.dir/source/sample_example.cpp.o"
-  "/Users/Blueshift/git/rand_pixel_sampling/source/sampling/sample.cpp" "/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o"
+  "/Users/Blueshift/git/reaarangingpixels/source/evaluation/evaluate.cpp" "/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir/source/evaluation/evaluate.cpp.o"
+  "/Users/Blueshift/git/reaarangingpixels/source/interpretation/interpret.cpp" "/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir/source/interpretation/interpret.cpp.o"
+  "/Users/Blueshift/git/reaarangingpixels/source/pixel.cpp" "/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir/source/pixel.cpp.o"
+  "/Users/Blueshift/git/reaarangingpixels/source/sample_example.cpp" "/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir/source/sample_example.cpp.o"
+  "/Users/Blueshift/git/reaarangingpixels/source/sampling/sample.cpp" "/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir/source/sampling/sample.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 

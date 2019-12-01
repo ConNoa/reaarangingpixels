@@ -6,47 +6,53 @@
 
 #IncludeRegexTransform: 
 
-/Users/Blueshift/git/rand_pixel_sampling/source/evaluation/evaluate.cpp
+/Users/Blueshift/git/reaarangingpixels/source/evaluation/evaluate.cpp
 stdio.h
 -
 opencv2/opencv.hpp
 -
 ../pixel.hpp
-/Users/Blueshift/git/rand_pixel_sampling/source/pixel.hpp
+/Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
 time.h
 -
 math.h
 -
 opencv2/highgui/highgui.hpp
-/Users/Blueshift/git/rand_pixel_sampling/source/evaluation/opencv2/highgui/highgui.hpp
+/Users/Blueshift/git/reaarangingpixels/source/evaluation/opencv2/highgui/highgui.hpp
 opencv2/core/types_c.h
 -
 opencv2/core/core_c.h
-/Users/Blueshift/git/rand_pixel_sampling/source/evaluation/opencv2/core/core_c.h
+/Users/Blueshift/git/reaarangingpixels/source/evaluation/opencv2/core/core_c.h
 
-/Users/Blueshift/git/rand_pixel_sampling/source/interpretation/interpret.cpp
+/Users/Blueshift/git/reaarangingpixels/source/interpretation/interpret.cpp
 stdio.h
 -
 opencv2/opencv.hpp
 -
 ../pixel.hpp
-/Users/Blueshift/git/rand_pixel_sampling/source/pixel.hpp
+/Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
 time.h
 -
 
-/Users/Blueshift/git/rand_pixel_sampling/source/pixel.hpp
+/Users/Blueshift/git/reaarangingpixels/source/pixel.cpp
+pixel.hpp
+/Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
+ostream
+-
+
+/Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
 iosfwd
 -
 opencv2/opencv.hpp
 -
 
-/Users/Blueshift/git/rand_pixel_sampling/source/sample_example.cpp
+/Users/Blueshift/git/reaarangingpixels/source/sample_example.cpp
 sampling/sample.cpp
-/Users/Blueshift/git/rand_pixel_sampling/source/sampling/sample.cpp
+/Users/Blueshift/git/reaarangingpixels/source/sampling/sample.cpp
 interpretation/interpret.cpp
-/Users/Blueshift/git/rand_pixel_sampling/source/interpretation/interpret.cpp
+/Users/Blueshift/git/reaarangingpixels/source/interpretation/interpret.cpp
 evaluation/evaluate.cpp
-/Users/Blueshift/git/rand_pixel_sampling/source/evaluation/evaluate.cpp
+/Users/Blueshift/git/reaarangingpixels/source/evaluation/evaluate.cpp
 stdio.h
 -
 opencv2/opencv.hpp
@@ -54,7 +60,7 @@ opencv2/opencv.hpp
 string
 -
 pixel.hpp
-/Users/Blueshift/git/rand_pixel_sampling/source/pixel.hpp
+/Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
 sys/types.h
 -
 dirent.h
@@ -62,13 +68,13 @@ dirent.h
 errno.h
 -
 
-/Users/Blueshift/git/rand_pixel_sampling/source/sampling/sample.cpp
+/Users/Blueshift/git/reaarangingpixels/source/sampling/sample.cpp
 stdio.h
 -
 opencv2/opencv.hpp
 -
 ../pixel.hpp
-/Users/Blueshift/git/rand_pixel_sampling/source/pixel.hpp
+/Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
 time.h
 -
 math.h

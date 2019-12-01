@@ -1,3 +1,4 @@
-/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/rebuild_cache.dir
-/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/edit_cache.dir
-/Users/Blueshift/git/rand_pixel_sampling/build/CMakeFiles/sample_example.dir
+/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/rebuild_cache.dir
+/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/edit_cache.dir
+/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/allfred.dir
+/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir
