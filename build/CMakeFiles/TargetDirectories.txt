@@ -1,4 +1,0 @@
-/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/rebuild_cache.dir
-/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/edit_cache.dir
-/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/allfred.dir
-/Users/Blueshift/git/reaarangingpixels/build/CMakeFiles/sample_example.dir
