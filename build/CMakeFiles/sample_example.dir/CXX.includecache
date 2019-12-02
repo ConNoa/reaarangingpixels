@@ -34,12 +34,6 @@ opencv2/opencv.hpp
 time.h
 -
 
-/Users/Blueshift/git/reaarangingpixels/source/pixel.cpp
-pixel.hpp
-/Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
-ostream
--
-
 /Users/Blueshift/git/reaarangingpixels/source/pixel.hpp
 iosfwd
 -

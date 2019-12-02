@@ -49,12 +49,17 @@ int main(int argc, char** argv )
 
   cv::Mat image_l;
   for (unsigned int i = 0;i < files.size();i++) {                               //load images.
+    String windowname = files[i];
+
       if(((std::string(".")).compare(files[i]) != 0) && ((std::string("..")).compare(files[i]) != 0) )
       {
         image_l = cv::imread(dir+"/"+files[i], 1 );
+      //  imshow(windowname, image_l);
+      //  waitKey(0);
+      //  destroyWindow(windowname);
         if ( image_l.data )
         {
-            Mat image_d;
+            cv::Mat image_d;
             std::cout << dir+files[i] << std::endl;
             image_l.convertTo(image_d, CV_64FC3);                                 //we want double images!!
             ref_images.push_back(std::pair<std::string,Mat>(files[i],image_d));
@@ -79,25 +84,33 @@ int main(int argc, char** argv )
       std::string ref_image_name=(*ref_image).first;
       Mat ref_image_img         =(*ref_image).second;
 
-      Sampler sampler(sample_amount,ref_image_img); // Hier wird ein sampler erstellt!
+      int pic_width = 512;
+      int pic_height = 320;
+      int fixed_mems_amount = pic_width*pic_height;
+
+
+      Sampler sampler(fixed_mems_amount,ref_image_img); // Hier wird ein sampler erstellt!
 
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<sample_amount<<" samples ("<<((sample_amount*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
       std::vector<std::pair<std::string,std::vector<Pixel_d> > > patterns; //speichert die verschiedenen samples!
       //0:GRID
-        patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Grid",sampler.calc_grid()));
+      //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Grid",sampler.calc_grid()));
       //1:HEXA
-        //patterns.push_back(sampler.calc_rand_d());
+      //patterns.push_back(sampler.calc_rand_d());
       //2:RAND
-        patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
+//      patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
+    //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
+
       //4:HALT
-        patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton()));
+      patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton_compressed()));
+  //    patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton()));
 
 		//die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
-		std::cout<<"#Sampling done!\n";
+		  std::cout<<"#Sampling done!\n";
 
 	   //Hier wird eine Interpreter erstellt um die samples zu visualisieren:
-	   std::cout<<"\n\n#Visualizing Image!\n";
-      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
+	    std::cout<<"\n\n#Visualizing Image!\n";
+      Interpreter interpreter(pic_width,pic_height);
       Mat output;
       Mat eval_out;
       for(std::vector<std::pair<std::string,std::vector<Pixel_d> > >::iterator pattern= patterns.begin(); pattern != patterns.end(); ++pattern)

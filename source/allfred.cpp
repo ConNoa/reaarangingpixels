@@ -26,17 +26,11 @@ void getdir (std::string dir, std::vector<std::string> &files)
     closedir(dp);
 }
 
+cv::Mat  shrink_picture_by_factor(Mat actual_image, int factor)
+{
 
-//usage: ./sample_example ./path_to_image_folder
-//	-this script uses the sampler class. The path_to_image_folder should provide all
-//  reference images.
-//
-//	-after loading, it samples them in a grid, halton and random pattern
-//
-// -all the samples are stored in seperate vectors of pixels (x,y,r,g,b)
-// 	the seperate vectors are stored in the pattern vector
-//
-//	-to visualize the output, the interpreter is used
+}
+
 
 int main(int argc, char** argv )
 {
