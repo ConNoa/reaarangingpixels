@@ -21,6 +21,7 @@ public:
 
   std::vector<Pixel_d>  calc_grid(){
     std::cout<<"sampling grid\n";
+    
     std::vector<Pixel_d> output_pattern;
 
     //SAMPLING
