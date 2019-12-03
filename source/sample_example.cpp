@@ -89,7 +89,7 @@ int main(int argc, char** argv )
       int fixed_mems_amount = pic_width*pic_height;
 
 
-      Sampler sampler(fixed_mems_amount,ref_image_img); // Hier wird ein sampler erstellt!
+      Sampler sampler(fixed_mems_amount,ref_image_img, pic_width, pic_height); // Hier wird ein sampler erstellt!
 
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<sample_amount<<" samples ("<<((sample_amount*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
       std::vector<std::pair<std::string,std::vector<Pixel_d> > > patterns; //speichert die verschiedenen samples!
@@ -99,7 +99,7 @@ int main(int argc, char** argv )
       //patterns.push_back(sampler.calc_rand_d());
       //2:RAND
 //      patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
-    //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
+      patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d_compressed()));
 
       //4:HALT
       patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton_compressed()));

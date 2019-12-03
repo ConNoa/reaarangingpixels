@@ -10,9 +10,11 @@ using namespace cv;
 class Sampler{
 public:
   //expects CV_8UC3 image!
-  Sampler(int amount, Mat const& image):
+  Sampler(int amount, Mat const& image, int out_x, int out_y):
       _Amount(amount),
-      _Image(image)
+      _Image(image),
+      _Output_x(out_x),
+      _Output_y(out_y)
       {
         srand(time(NULL));  //SEED
         _X=_Image.cols;
@@ -81,14 +83,12 @@ public:
   }
 
   std::vector<Pixel_d>  calc_halton_compressed(){
-      std::cout<<"sampling halton\n";
+      std::cout<<"sampling halton compressed\n";
       std::vector<Pixel_d> output_pattern;
 
       //SAMPLING
       cv::Size size = _Image.size();
       //------------newstuff-------------------
-      double pic_width = 512;
-      double pic_height = 320;
       double count_x = 0;
       double count_y = 0;
 
@@ -126,7 +126,7 @@ public:
 
         output_pattern.push_back(pix);
         count_x = count_x+1;
-        if (int(count_x)%int(pic_width) == 0){
+        if (int(count_x)%int(_Output_x) == 0){
           count_x = 0;
           count_y = count_y+1;
         }
@@ -138,8 +138,6 @@ public:
   void set_image(Mat const& image){
     _Image=image;
   }
-
-
 
   std::vector<Pixel>  calc_rand(){
     std::cout<<"sampling random\n";
@@ -205,44 +203,62 @@ public:
     }
 
 
-    std::vector<Pixel_d>  calc_rand_d_compressed(){
-        std::cout<<"sampling random\n";
-        std::vector<Pixel_d> output_pattern;
+  std::vector<Pixel_d>  calc_rand_d_compressed(){
+      std::cout<<"sampling random compressed\n";
+      std::vector<Pixel_d> output_pattern;
 
-        //PREPARE:
-        std::vector<std::pair<int, int> > not_sampled_yet;
-        for(int x=0; x<_X; x++)
+      //PREPARE:
+      std::vector<std::pair<int, int> > not_sampled_yet;
+      for(int x=0; x<_X; x++)
         {
           for(int y=0; y<_Y; y++)
           {
             not_sampled_yet.push_back(std::pair<int,int>(x,y));
           }
         }
+      double count_x = 0;
+      double count_y = 0;
+      //SAMPLING
+      Pixel_d pix;
 
-        //SAMPLING
-        Pixel_d pix;
+      for (int i=0; i<_Amount; i++)
+      {
+        std::cout<<i<<"\n";
+        int n= rand()% not_sampled_yet.size();
+        pix.x= not_sampled_yet[n].first;
+        pix.y= not_sampled_yet[n].second;
+        pix.color = _Image.at<Vec3d>(Point(pix.x,pix.y));
 
-        for (int i=0; i<_Amount; i++)
-        {
-          //std::cout<<i<<"\n";
-          int n= rand()% not_sampled_yet.size();
-          pix.x= not_sampled_yet[n].first;
-          pix.y= not_sampled_yet[n].second;
-          pix.color = _Image.at<Vec3d>(Point(pix.x,pix.y));
-          not_sampled_yet[n]=not_sampled_yet.back();
-          not_sampled_yet.pop_back();
-          output_pattern.push_back(pix);
+        not_sampled_yet[n]=not_sampled_yet.back();
+        not_sampled_yet.pop_back();
+        
+        pix.x= count_x;
+        pix.y= count_y;
+
+        output_pattern.push_back(pix);
+        count_x = count_x+1;
+        if (int(count_x)%int(_Output_x) == 0){
+          count_x = 0;
+          count_y = count_y+1;
         }
-        return output_pattern;
+        output_pattern.push_back(pix);
+
       }
+
+
+      return output_pattern;
+    }
 
 
 
 private:
   int _Amount;
   Mat _Image;
+  int _Output_x;
+  int _Output_y;
   int _X;
   int _Y;
+
 };
 
 //using namespace cv;
