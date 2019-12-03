@@ -10,11 +10,9 @@ using namespace cv;
 class Sampler{
 public:
   //expects CV_8UC3 image!
-  Sampler(int amount, Mat const& image, int out_x, int out_y):
+  Sampler(int amount, Mat const& image):
       _Amount(amount),
-      _Image(image),
-      _Output_x(out_x),
-      _Output_y(out_y)
+      _Image(image)
       {
         srand(time(NULL));  //SEED
         _X=_Image.cols;
@@ -82,6 +80,7 @@ public:
     return output_pattern;
   }
 
+/*
   std::vector<Pixel_d>  calc_halton_compressed(){
       std::cout<<"sampling halton compressed\n";
       std::vector<Pixel_d> output_pattern;
@@ -130,10 +129,11 @@ public:
           count_x = 0;
           count_y = count_y+1;
         }
-        
+
       }
       return output_pattern;
     }
+*/
 
   //expects CV_8UC3 image!
   void set_image(Mat const& image){
@@ -203,7 +203,7 @@ public:
       return output_pattern;
     }
 
-
+/*
   std::vector<Pixel_d>  calc_rand_d_compressed(){
       std::cout<<"sampling random compressed\n";
       std::vector<Pixel_d> output_pattern;
@@ -249,14 +249,12 @@ public:
 
       return output_pattern;
     }
-
+*/
 
 
 private:
   int _Amount;
   Mat _Image;
-  int _Output_x;
-  int _Output_y;
   int _X;
   int _Y;
 
