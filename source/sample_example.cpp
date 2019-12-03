@@ -103,7 +103,7 @@ int main(int argc, char** argv )
 
       //4:HALT
       patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton_compressed()));
-  //    patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton()));
+      patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton()));
 
 		//die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
 		  std::cout<<"#Sampling done!\n";

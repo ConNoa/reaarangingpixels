@@ -130,6 +130,7 @@ public:
           count_x = 0;
           count_y = count_y+1;
         }
+        
       }
       return output_pattern;
     }
@@ -231,7 +232,7 @@ public:
 
         not_sampled_yet[n]=not_sampled_yet.back();
         not_sampled_yet.pop_back();
-        
+
         pix.x= count_x;
         pix.y= count_y;
 
