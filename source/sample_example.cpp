@@ -68,7 +68,7 @@ int main(int argc, char** argv )
         //std::cout<<"exlude!?:"<<files[i]<<"\n";
       }
   }
-  std::cout<<"loading of reference images done!\n\n";
+  std::cout<<"loading of reference   images done!\n\n";
 
 
 
