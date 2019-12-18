@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp> //image operations
 #include "../pixel.hpp"
+#include "../superpixel.hpp"
 #include <time.h>             //time measuring & seed
 #include <math.h>             //ceil, sqrt etc
 
@@ -21,7 +22,7 @@ public:
 
   std::vector<Pixel_d>  calc_grid(){
     std::cout<<"sampling grid\n";
-    
+
     std::vector<Pixel_d> output_pattern;
 
     //SAMPLING
@@ -203,6 +204,50 @@ public:
       }
       return output_pattern;
     }
+
+    std::vector<Superpixel_3> random_superpixel(){
+      std::cout<<"superpixel sampling \n";
+      std::vector<Superpixel_3> output_pattern;
+      int superpixel_width = 3;
+      int border = superpixel_width-1;  // bordercondition
+
+      //Preparation
+      std::vector<std::pair<int, int> > not_sampled_yet;
+      for(int x=0; x<_X-border; x++)
+      {
+        for(int y=0; y<_Y-border; y++)
+        {
+          not_sampled_yet.push_back(std::pair<int,int>(x,y));
+        }
+      }
+      Pixel_d px_uplft;
+      Superpixel_3 suppix;
+      for (int i=0; i<_Amount; i++)
+      {
+        int n= rand()% not_sampled_yet.size();
+        int picked_x = not_sampled_yet[n].first;
+        int picked_y = not_sampled_yet[n].second;
+
+        for(int i = 0; i<8; i++){
+          px_uplft.x= picked_x;
+          px_uplft.y= picked_y;
+          px_uplft.color = _Image.at<Vec3d>(Point(px_uplft.x,px_uplft.y));
+          suppix.pixelarray[i-1] = (px_uplft);
+          std::cout<<"Superpixel auf pos[]" <<i-1<<"filled";
+          px_uplft.x = px_uplft.x+1;
+          if((i%3)==0){
+            px_uplft.y = px_uplft.y+1;
+            px_uplft.x = picked_x;
+          }
+        }
+        not_sampled_yet[n]=not_sampled_yet.back();
+        not_sampled_yet.pop_back();
+        output_pattern.push_back(suppix);
+      }
+      return output_pattern;
+    }
+
+
 
 /*
   std::vector<Pixel_d>  calc_rand_d_compressed(){
