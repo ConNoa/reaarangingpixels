@@ -1,0 +1,20 @@
+MEMS PIXEL
+x     512
+y     320
+
+
+x*y =  163840     = a
+
+
+Full HD Beamer
+x 1920
+y 1080
+
+x*y =  2073600    =  b
+
+
+
+b/a =   12.65625
+
+
+superpixel_3  for the moment best result
