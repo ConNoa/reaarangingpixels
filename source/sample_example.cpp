@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include "./superpixel.hpp"
+//#include "./multipix.hpp"
 
 using namespace cv;
 
@@ -88,40 +90,66 @@ int main(int argc, char** argv )
       int pic_height = 320;
       int fixed_mems_amount = pic_width*pic_height;
 
+      /* -----------Old Sampler for Single Pixels--------------
+            //    Sampler sampler(fixed_mems_amount,ref_image_img, pic_width, pic_height); // Hier wird ein sampler erstellt!
+            Sampler sampler(sample_amount, ref_image_img); // Hier wird ein sampler erstellt!
 
-  //    Sampler sampler(fixed_mems_amount,ref_image_img, pic_width, pic_height); // Hier wird ein sampler erstellt!
-      Sampler sampler(sample_amount, ref_image_img); // Hier wird ein sampler erstellt!
+            std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<sample_amount<<" samples ("<<((sample_amount*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
+            std::vector<std::pair<std::string,std::vector<Pixel_d> > > patterns; //speichert die verschiedenen samples!
+            //0:GRID
+            //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Grid",sampler.calc_grid()));
+            //1:HEXA
+            //patterns.push_back(sampler.calc_rand_d());
+            //2:RAND
+            patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
+            //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d_compressed()));
 
-      std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<sample_amount<<" samples ("<<((sample_amount*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
-      std::vector<std::pair<std::string,std::vector<Pixel_d> > > patterns; //speichert die verschiedenen samples!
-      //0:GRID
-      //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Grid",sampler.calc_grid()));
-      //1:HEXA
-      //patterns.push_back(sampler.calc_rand_d());
-      //2:RAND
-      patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
-    //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d_compressed()));
+            //4:HALT
+            //patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton_compressed()));
+            patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton()));
 
-      //4:HALT
-      //patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton_compressed()));
-      patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton()));
+      		  //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
+      		  std::cout<<"#Sampling done!\n";
+      -------------------------------------------------------------*/
 
-		//die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
-		  std::cout<<"#Sampling done!\n";
 
-	   //Hier wird eine Interpreter erstellt um die samples zu visualisieren:
-	    std::cout<<"\n\n#Visualizing Image!\n";
-//      Interpreter interpreter(pic_width,pic_height);
-      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
+      //-----------New Sampler for Superpixel_3 Pixels--------------
+            //    Sampler sampler(fixed_mems_amount,ref_image_img, pic_width, pic_height); // Hier wird ein sampler erstellt!
+            Sampler sampler(fixed_mems_amount, ref_image_img); // Hier wird ein sampler erstellt!
+
+            //Superpixelsampling with Superpixel_3
+            std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Superpixel_3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
+            std::vector<std::pair<std::string,std::vector<Superpixel_3>>> patterns; //speichert die verschiedenen samples!
+
+            patterns.push_back(std::pair<std::string,std::vector<Superpixel_3> >("SRand",sampler.random_superpixel()));
+
+
+
+            }
+      		  //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
+      		  std::cout<<"#Sampling done!\n";
+      //--------------------End of new Sampler --------------------------
+
+
+       //      Interpreter interpreter(pic_width,pic_height);
+      //Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
+
+
+
+
+      /*-----------------Old Interpreter, imwrite---------------------
       Mat output;
       Mat eval_out;
-      for(std::vector<std::pair<std::string,std::vector<Pixel_d> > >::iterator pattern= patterns.begin(); pattern != patterns.end(); ++pattern)
+      for(std::vector<std::pair<std::string,std::vector<Superpixel_3> > >::iterator pattern= patterns.begin(); pattern != patterns.end(); ++pattern)
       {
         interpreter.set_pattern((*pattern).second);
         output = interpreter.no_interpretation();
         std::string name="basic_samples"+std::to_string(sample_amount)+ref_image_name+(*pattern).first;
         imwrite("result_"+name+".png",output);
       }
+
+      */
+
+
 		std::cout<<"#Visualizing done!\n";
     }
-  }

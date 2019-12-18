@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp> //image operations
-#include "../pixel.hpp"
 #include "../superpixel.hpp"
+
+#include "../pixel.hpp"
 #include <time.h>             //time measuring & seed
 #include <math.h>             //ceil, sqrt etc
 
@@ -221,29 +222,46 @@ public:
         }
       }
       Pixel_d px_uplft;
-      Superpixel_3 suppix;
+
+  //    int counter2 = 0;
+  //    int counter1 = 0;
       for (int i=0; i<_Amount; i++)
       {
+        Superpixel_3 suppix;
+
         int n= rand()% not_sampled_yet.size();
         int picked_x = not_sampled_yet[n].first;
         int picked_y = not_sampled_yet[n].second;
 
-        for(int i = 0; i<8; i++){
-          px_uplft.x= picked_x;
-          px_uplft.y= picked_y;
+  //      if(counter1 <2)std::cout<<"\n Pixel "<<" x:  "<<picked_x<<"   y:  "<<picked_y<<"   \n";
+
+        px_uplft.x= picked_x;
+        px_uplft.y= picked_y;
+
+        for(int p = 0; p<9; p++){
+
           px_uplft.color = _Image.at<Vec3d>(Point(px_uplft.x,px_uplft.y));
-          suppix.pixelarray[i-1] = (px_uplft);
-          std::cout<<"Superpixel auf pos[]" <<i-1<<"filled";
+          //suppix.pixelarray[i-1] = (px_uplft);
+          //-------another try with std::vector
+          suppix.pixelpart.push_back(px_uplft);
+//debug          if(counter2 <2)std::cout<<"\n Pixel "<<i<<" vom superpixel "<<counter2<<" mit den Werten:  "<<"x:  "<<px_uplft.x<<"   y:  "<<px_uplft.y<<"   ";
           px_uplft.x = px_uplft.x+1;
-          if((i%3)==0){
+
+          if(p==2||p==5){
+//debug            if(counter2 <2)std::cout<<" pickedx vorm sprung"<< picked_x<<"\n";
             px_uplft.y = px_uplft.y+1;
-            px_uplft.x = picked_x;
+            px_uplft.x = px_uplft.x-3;
           }
+
         }
+//        if(counter2 <2)std::cout<<"\n";
+//        counter2++;
+//        counter1++;
         not_sampled_yet[n]=not_sampled_yet.back();
         not_sampled_yet.pop_back();
         output_pattern.push_back(suppix);
       }
+      std::cout<<"all pixels sampled \n";
       return output_pattern;
     }
 
