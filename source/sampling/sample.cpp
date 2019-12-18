@@ -6,14 +6,14 @@
 #include "../multipix.hpp"
 #include <time.h>             //time measuring & seed
 #include <math.h>             //ceil, sqrt etc
-
+#include "../collmap.hpp"
 
 using namespace cv;
 
 class Sampler{
 public:
   //expects CV_8UC3 image!
-  Sampler(int amount, Mat const& image, Interface & generalout, Collisonmap & brigthnesmap):
+  Sampler(int amount, Mat const& image, Interface & generalout, Collmap & brigthnesmap):
       _Amount(amount),
       _Image(image),
       _Out(generalout),
@@ -351,7 +351,7 @@ private:
   int _Amount;
   Mat _Image;
   Interface _Out;
-  Collisonmap _Overlapmap;
+  Collmap _Overlapmap;
   int _X;
   int _Y;
 

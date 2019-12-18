@@ -11,6 +11,7 @@
 #include "./superpixel.hpp"
 #include "./multipix.hpp"
 #include <array>
+#include "./collmap.hpp"
 
 
 using namespace cv;
@@ -92,7 +93,7 @@ int main(int argc, char** argv )
 
       std::vector<std::vector<int>>collisionmap(ref_image_img.cols, std::vector<int> (ref_image_img.rows, 0));
       Interface alloutput;
-      Collisonmap collisioncount;
+      Collmap collisioncount;
       int fixed_mems_amount = mems_w*mems_h;
 
 
