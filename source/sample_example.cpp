@@ -9,7 +9,9 @@
 #include <dirent.h>
 #include <errno.h>
 #include "./superpixel.hpp"
-//#include "./multipix.hpp"
+#include "./multipix.hpp"
+#include <array>
+
 
 using namespace cv;
 
@@ -70,7 +72,7 @@ int main(int argc, char** argv )
         //std::cout<<"exlude!?:"<<files[i]<<"\n";
       }
   }
-  std::cout<<"loading of reference   images done!\n\n";
+  std::cout<<"loading of reference images done!\n\n";
 
 
 
@@ -79,19 +81,23 @@ int main(int argc, char** argv )
 	int sample_amount = ref_images[0].second.cols *ref_images[0].second.rows * 0.5*0.5*0.5; // How many samples? !achtung grid images brauchen passenden wert!
 	int ref_samples = ref_images[0].second.cols*ref_images[0].second.rows; //reference image
     //std::cout<<"Sampling "<<sample_amount<<" samples, which are "<<((sample_amount)/((float)ref_samples*100))<<"percent of the reference image.\n";
-
+    //std::cout<<ref_images[0].second.cols;
     for(std::vector<std::pair<std::string, Mat> >::iterator ref_image = ref_images.begin(); ref_image != ref_images.end(); ++ref_image) //für alle ref IMAGES
     {
 
       std::string ref_image_name=(*ref_image).first;
       Mat ref_image_img         =(*ref_image).second;
+      int const mems_w = 512;
+      int const mems_h = 320;
 
-      int pic_width = 512;
-      int pic_height = 320;
-      int fixed_mems_amount = pic_width*pic_height;
+      std::vector<std::vector<int>>collisionmap(ref_image_img.cols, std::vector<int> (ref_image_img.rows, 0));
+      Interface alloutput;
+      Collisonmap collisioncount;
+      int fixed_mems_amount = mems_w*mems_h;
+
 
       /* -----------Old Sampler for Single Pixels--------------
-            //    Sampler sampler(fixed_mems_amount,ref_image_img, pic_width, pic_height); // Hier wird ein sampler erstellt!
+            //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
             Sampler sampler(sample_amount, ref_image_img); // Hier wird ein sampler erstellt!
 
             std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<sample_amount<<" samples ("<<((sample_amount*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
@@ -113,15 +119,18 @@ int main(int argc, char** argv )
       -------------------------------------------------------------*/
 
 
-      //-----------New Sampler for Superpixel_3 Pixels--------------
-            //    Sampler sampler(fixed_mems_amount,ref_image_img, pic_width, pic_height); // Hier wird ein sampler erstellt!
-            Sampler sampler(fixed_mems_amount, ref_image_img); // Hier wird ein sampler erstellt!
+      //-----------New Sampler for Superpixel_3/MultiPix Pixels--------------
+            //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
+            Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisioncount); // Hier wird ein sampler erstellt!
 
             //Superpixelsampling with Superpixel_3
             std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Superpixel_3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
-            std::vector<std::pair<std::string,std::vector<Superpixel_3>>> patterns; //speichert die verschiedenen samples!
+            std::vector<std::pair<std::string,std::vector<Superpixel_3>>> superpixelpattern; //speichert die verschiedenen samples!
+            superpixelpattern.push_back(std::pair<std::string,std::vector<Superpixel_3> >("SRand",sampler.random_superpixel()));
 
-            patterns.push_back(std::pair<std::string,std::vector<Superpixel_3> >("SRand",sampler.random_superpixel()));
+            //MultiPix sampling
+            std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Superpixel_3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
+
 
 
 
@@ -131,7 +140,7 @@ int main(int argc, char** argv )
       //--------------------End of new Sampler --------------------------
 
 
-       //      Interpreter interpreter(pic_width,pic_height);
+       //      Interpreter interpreter(mems_w,mems_h);
       //Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
 
 

@@ -3,6 +3,7 @@
 #include "../superpixel.hpp"
 
 #include "../pixel.hpp"
+#include "../multipix.hpp"
 #include <time.h>             //time measuring & seed
 #include <math.h>             //ceil, sqrt etc
 
@@ -12,14 +13,17 @@ using namespace cv;
 class Sampler{
 public:
   //expects CV_8UC3 image!
-  Sampler(int amount, Mat const& image):
+  Sampler(int amount, Mat const& image, Interface & generalout, Collisonmap & brigthnesmap):
       _Amount(amount),
-      _Image(image)
+      _Image(image),
+      _Out(generalout),
+      _Overlapmap(brigthnesmap)
       {
         srand(time(NULL));  //SEED
         _X=_Image.cols;
         _Y=_Image.rows;
       }
+      //      std::cout<<"-----------------cols  "<<_Image.cols<<"  -----rows  "<<_Image.rows<<"\n";
 
   std::vector<Pixel_d>  calc_grid(){
     std::cout<<"sampling grid\n";
@@ -143,38 +147,6 @@ public:
     _Image=image;
   }
 
-  std::vector<Pixel>  calc_rand(){
-    std::cout<<"sampling random\n";
-    std::vector<Pixel> output_pattern;
-
-    //PREPARE:
-    std::vector<std::pair<int, int> > not_sampled_yet;
-    for(int x=0; x<_X; x++)
-    {
-      for(int y=0; y<_Y; y++)
-      {
-        not_sampled_yet.push_back(std::pair<int,int>(x,y));
-      }
-    }
-
-    //SAMPLING
-    Pixel pix;
-    //srand(time(NULL));  //SEED
-    for (int i=0; i<_Amount; i++)
-    {
-
-      int n= rand()% not_sampled_yet.size();
-      pix.x= not_sampled_yet[n].first;
-      pix.y= not_sampled_yet[n].second;
-      pix.color = _Image.at<Vec3b>(Point(pix.x,pix.y));
-      not_sampled_yet[n]=not_sampled_yet.back();
-      not_sampled_yet.pop_back();
-      output_pattern.push_back(pix);
-    }
-    return output_pattern;
-  }
-
-
   std::vector<Pixel_d>  calc_rand_d(){
       std::cout<<"sampling random\n";
       std::vector<Pixel_d> output_pattern;
@@ -206,7 +178,7 @@ public:
       return output_pattern;
     }
 
-    std::vector<Superpixel_3> random_superpixel(){
+  std::vector<Superpixel_3> random_superpixel(){
       std::cout<<"superpixel sampling \n";
       std::vector<Superpixel_3> output_pattern;
       int superpixel_width = 3;
@@ -265,6 +237,65 @@ public:
       return output_pattern;
     }
 
+    void random_multipix(){
+        std::cout<<"superpixel sampling \n";
+        std::vector<Superpixel_3> output_pattern;
+        int superpixel_width = 3;
+        int border = superpixel_width-1;  // bordercondition
+
+        //Preparation
+        std::vector<std::pair<int, int> > not_sampled_yet;
+        for(int x=0; x<_X-border; x++)
+        {
+          for(int y=0; y<_Y-border; y++)
+          {
+            not_sampled_yet.push_back(std::pair<int,int>(x,y));
+          }
+        }
+        Pixel_d px_uplft;
+
+    //    int counter2 = 0;
+    //    int counter1 = 0;
+        for (int i=0; i<_Amount; i++)
+        {
+          Superpixel_3 suppix;
+
+          int n= rand()% not_sampled_yet.size();
+          int picked_x = not_sampled_yet[n].first;
+          int picked_y = not_sampled_yet[n].second;
+
+    //      if(counter1 <2)std::cout<<"\n Pixel "<<" x:  "<<picked_x<<"   y:  "<<picked_y<<"   \n";
+
+          px_uplft.x= picked_x;
+          px_uplft.y= picked_y;
+
+          for(int p = 0; p<9; p++){
+
+            px_uplft.color = _Image.at<Vec3d>(Point(px_uplft.x,px_uplft.y));
+            //suppix.pixelarray[i-1] = (px_uplft);
+            //-------another try with std::vector
+            suppix.pixelpart.push_back(px_uplft);
+    //debug          if(counter2 <2)std::cout<<"\n Pixel "<<i<<" vom superpixel "<<counter2<<" mit den Werten:  "<<"x:  "<<px_uplft.x<<"   y:  "<<px_uplft.y<<"   ";
+            px_uplft.x = px_uplft.x+1;
+
+            if(p==2||p==5){
+    //debug            if(counter2 <2)std::cout<<" pickedx vorm sprung"<< picked_x<<"\n";
+              px_uplft.y = px_uplft.y+1;
+              px_uplft.x = px_uplft.x-3;
+            }
+
+          }
+    //        if(counter2 <2)std::cout<<"\n";
+    //        counter2++;
+    //        counter1++;
+          not_sampled_yet[n]=not_sampled_yet.back();
+          not_sampled_yet.pop_back();
+          output_pattern.push_back(suppix);
+        }
+        std::cout<<"all pixels sampled \n";
+      //  return output_pattern;
+      return;
+      }
 
 
 /*
@@ -319,6 +350,8 @@ public:
 private:
   int _Amount;
   Mat _Image;
+  Interface _Out;
+  Collisonmap _Overlapmap;
   int _X;
   int _Y;
 
