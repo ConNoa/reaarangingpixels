@@ -9,8 +9,8 @@ class Superpixel_3
 public:
   Superpixel_3();
 
-  //std::vector<Pixel_d> pixelpart;
-  std::array <Pixel_d,9> pixelarray;
+  std::vector<Pixel_d> pixelpart;
+  //std::array <Pixel_d,9> pixelarray;
 };
 
 #endif
