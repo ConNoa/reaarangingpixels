@@ -15,7 +15,7 @@ find_package(OpenCV)
 include_directories(include)
 
 
-add_executable(sample_example source/sample_example.cpp source/collmap.cpp source/superpixel.cpp source/pixel.cpp source/sampling/sample.cpp source/interpretation/interpret.cpp source/evaluation/evaluate.cpp)
+add_executable(sample_example source/sample_example.cpp source/superpixel.cpp source/pixel.cpp source/sampling/sample.cpp source/interpretation/interpret.cpp source/evaluation/evaluate.cpp)
 target_link_libraries( sample_example ${OpenCV_LIBS} )
 
 # add_executable(allfred source/allfred.cpp source/pixel.cpp source/sampling/sample.cpp source/interpretation/interpret.cpp source/evaluation/evaluate.cpp)

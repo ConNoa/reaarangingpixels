@@ -13,11 +13,11 @@ using namespace cv;
 class Sampler{
 public:
   //expects CV_8UC3 image!
-  Sampler(int amount, Mat const& image, Interface & generalout, Collmap & brigthnesmap):
+  Sampler(int amount, Mat const& image, /*Interface & generalout,*/ std::vector<std::vector<int> > & _coll_mat):
       _Amount(amount),
-      _Image(image),
-      _Out(generalout),
-      _Overlapmap(brigthnesmap)
+      _Image(image)
+      //_Out(generalout),
+  //    _Overlapmap(brigthnesmap)
       {
         srand(time(NULL));  //SEED
         _X=_Image.cols;
@@ -350,8 +350,8 @@ public:
 private:
   int _Amount;
   Mat _Image;
-  Interface _Out;
-  Collmap _Overlapmap;
+//  Interface _Out;
+//  Collmap _Overlapmap;
   int _X;
   int _Y;
 

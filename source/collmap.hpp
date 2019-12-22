@@ -2,25 +2,17 @@
 #define COLLMAP_HPP
 
 #include <vector>
+//#include<bits/stdc++.h>
 
+/*
 class Collmap{
-public:
-  Collmap();
-  Collmap(int width, int height);
 
-
-
-private:
-  int _w;
-  int _h;
-  std::vector<std::vector<int>>(_colisio);
-  //, std::vector<int> (int, int));
-
+  vector<vector<ScreenCoordinates> > matrix_pos(1, vector<ScreenCoordinates>(1));
 
 };
 
 
-
+*/
 
 
 

@@ -11,7 +11,7 @@
 #include "./superpixel.hpp"
 #include "./multipix.hpp"
 #include <array>
-#include "./collmap.hpp"
+//#include "./collmap.hpp"
 
 
 using namespace cv;
@@ -90,11 +90,11 @@ int main(int argc, char** argv )
       Mat ref_image_img         =(*ref_image).second;
       int const mems_w = 512;
       int const mems_h = 320;
-
-      std::vector<std::vector<int>>collisionmap(ref_image_img.cols, std::vector<int> (ref_image_img.rows, 0));
-      Interface alloutput;
-      Collmap collisioncount;
+      int const disp_pix_width = ref_image_img.cols-(ref_image_img.cols%mems_w);
+      int const disp_pix_height = ref_image_img.rows-(ref_image_img.rows%mems_h);
+      std::vector<std::vector<int> > coll_mat(disp_pix_height, std::vector<int>(disp_pix_width,0));
       int fixed_mems_amount = mems_w*mems_h;
+      //  Interface alloutput;
 
 
       /* -----------Old Sampler for Single Pixels--------------
@@ -122,7 +122,8 @@ int main(int argc, char** argv )
 
       //-----------New Sampler for Superpixel_3/MultiPix Pixels--------------
             //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
-            Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisioncount); // Hier wird ein sampler erstellt!
+  //          Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisionmap); // Hier wird ein sampler erstellt!
+            Sampler sampler(fixed_mems_amount, ref_image_img, coll_mat); // Hier wird ein sampler erstellt!
 
             //Superpixelsampling with Superpixel_3
             std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Superpixel_3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
