@@ -237,8 +237,8 @@ public:
       return output_pattern;
     }
 
-    void random_multipix(){
-        std::cout<<"superpixel sampling \n";
+  void random_multipix(){
+        std::cout<<"multipix sampling \n";
         std::vector<Superpixel_3> output_pattern;
         int superpixel_width = 3;
         int border = superpixel_width-1;  // bordercondition

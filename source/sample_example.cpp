@@ -94,7 +94,8 @@ int main(int argc, char** argv )
       int const disp_pix_height = ref_image_img.rows-(ref_image_img.rows%mems_h);
       std::vector<std::vector<int> > coll_mat(disp_pix_height, std::vector<int>(disp_pix_width,0));
       int fixed_mems_amount = mems_w*mems_h;
-      //  Interface alloutput;
+      //Interface alloutput;
+      std::vector<std::vector<MultiPix> > Interface (512, std::vector<MultiPix>(320));
 
 
       /* -----------Old Sampler for Single Pixels--------------

@@ -18,18 +18,4 @@ struct MultiPix {
 
 };
 
-struct Interface {
-  std::array<std::array<MultiPix, 512>, 320> px;
-
-};
-/*
-struct Collisonmap{
-        int const rows = 20;
-        int const collums = 30;
-  std::vector<std::vector<int>,2000>cmap(std::vector<int>(3000, 0));
-
-};
-*/
-
-
 #endif
