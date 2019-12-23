@@ -260,11 +260,11 @@ public:
       //  bool print = true;
         for (int i=0; i<mems_h; i++)
         {
-        if(i%20==0)  std::cout << "h is " << i <<'\n';
+//        if(i%2==0)  std::cout << "h is " << i <<'\n';
 
           for (int l=0; l<mems_w; l++)
           {
-        if(l%103==0)    std::cout << "w is " << l <<'\n';
+        //if(l%1==0)    std::cout << "w is " << l <<'\n';
 
             int n= rand()% not_sampled_yet.size();
             _GeneralOut[i][l].x1 = not_sampled_yet[n].first;
@@ -280,12 +280,14 @@ public:
             for(int k=0; k<multipix_height; k++){
               for(int m=0; m<multipix_width; m++){
                 _GeneralOut[i][l].colors.push_back(_Image.at<Vec3d>(Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m)));
-              //  std::cout << "coloradded" << '\n';
+//std::cout << "coloradded :" <<_Image.at<Vec3d>(Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m)) <<'\n';
+  //              std::cout << "at:  :" <<Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m) <<'\n';
               }
             }
 
           }
         }
+        std::cout<< "multipixel written to refference \n";
         /*
           MultiPix m_pix;
 
