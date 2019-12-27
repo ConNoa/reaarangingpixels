@@ -90,6 +90,7 @@ int main(int argc, char** argv )
       Mat ref_image_img         =(*ref_image).second;
       int const mems_w = 512;
       int const mems_h = 320;
+      int fixed_mems_amount = mems_w*mems_h;
       int const disp_pix_width = 1920;
       int const disp_pix_height = 1080;
   //    int const disp_pix_width = ref_image_img.cols-(ref_image_img.cols%mems_w);
@@ -98,10 +99,9 @@ int main(int argc, char** argv )
       std::cout << "disp_pix_height = " << disp_pix_height<<'\n';
       std::vector<std::vector<int> > coll_mat(disp_pix_height, std::vector<int>(disp_pix_width,0));
       std::cout << "Coll_mat_created" << '\n';
-      int fixed_mems_amount = mems_w*mems_h;
-      //Interface alloutput;
       std::vector<std::vector<MultiPix> > interface (512, std::vector<MultiPix>(320));
       std::cout << "Interface created" << '\n';
+      std::vector<MultiPix> samples_out_of_picture;
 
 
       /* -----------Old Sampler for Single Pixels--------------
@@ -130,7 +130,7 @@ int main(int argc, char** argv )
       //-----------New Sampler for Superpixel_3/MultiPix Pixels--------------
             //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
   //          Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisionmap); // Hier wird ein sampler erstellt!
-      Sampler sampler(fixed_mems_amount, ref_image_img, interface, coll_mat); // Hier wird ein sampler erstellt!
+      Sampler sampler(fixed_mems_amount, ref_image_img); // Hier wird ein sampler erstellt!
 
 /*
             //Superpixelsampling with Superpixel_3
@@ -140,7 +140,8 @@ int main(int argc, char** argv )
 */
             //MultiPix sampling
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
-      sampler.random_multipix();
+      samples_out_of_picture = sampler.random_multipix();
+      std::cout<<"returnded\n";
 
 
 

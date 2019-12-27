@@ -13,10 +13,9 @@ using namespace cv;
 class Sampler{
 public:
   //expects CV_8UC3 image!
-  Sampler(int amount, Mat const& image, std::vector<std::vector<MultiPix>> & generalout, std::vector<std::vector<int>> & _coll_mat):
+  Sampler(int amount, Mat const& image):
       _Amount(amount),
-      _Image(image),
-      _GeneralOut(generalout)
+      _Image(image)
       //_Out(generalout),
   //    _Overlapmap(brigthnesmap)
       {
@@ -148,6 +147,12 @@ public:
     _Image=image;
   }
 
+void fill_GeneralOut(){
+
+
+
+}
+
   std::vector<Pixel_d>  calc_rand_d(){
       std::cout<<"sampling random\n";
       std::vector<Pixel_d> output_pattern;
@@ -238,15 +243,15 @@ public:
       return output_pattern;
     }
 
-  void random_multipix(){
+  std::vector<MultiPix> random_multipix(){
         std::cout<<"multipix sampling \n";
         int multipix_width = 3;
         int multipix_height = multipix_width;
         int mems_w = 512;
-        int mems_h = 312;
+        int mems_h = 320;
         int pix_ammount = multipix_width*multipix_width;
         int border = multipix_width-1;  // bordercondition
-
+        std::vector<MultiPix> mpoutput;
         //Preparation
         std::vector<std::pair<int, int> > not_sampled_yet;
         for(int x=0; x<_X-border; x++)
@@ -258,36 +263,76 @@ public:
         }
 //für sizeof mems werden multipxelerstellt zuerst das x1,y1, x2,y2 dann sollen die farben in den color vec geworfen werden, zum schluss müssen xc undyc noch  i und l  values bekommen
       //  bool print = true;
-        for (int i=0; i<mems_h; i++)
+      /*
+      for (int i=0; i<mems_h; i++)
+      {
+        if(i%2==0)  std::cout << "h is " << i <<'\n';
+
+        for (int l=0; l<mems_w; l++)
         {
-//        if(i%2==0)  std::cout << "h is " << i <<'\n';
+          //if(l%1==0)    std::cout << "w is " << l <<'\n';
+          int n= rand()% not_sampled_yet.size();
 
-          for (int l=0; l<mems_w; l++)
-          {
-        //if(l%1==0)    std::cout << "w is " << l <<'\n';
-
-            int n= rand()% not_sampled_yet.size();
-            _GeneralOut[i][l].x1 = not_sampled_yet[n].first;
-            _GeneralOut[i][l].y1 = not_sampled_yet[n].second;
-          //  std::cout << "Pixeladded" << '\n';
-
+          int x_act = not_sampled_yet[n].first;
+          int y_act = not_sampled_yet[n].second;
+        // std::cout<< "define xy1: \n";
+          _GeneralOut[i][l].x1 = x_act;
+          _GeneralOut[i][l].y1 = y_act;
+        //  std::cout << "Pixeladded" << '\n';
         //  if(print==true) std::cout<<"x1: "<<_GeneralOut[i][l].x1<<"  and y1: "<<_GeneralOut[i][l].y1<<"\n";
-
-            _GeneralOut[i][l].x2 = _GeneralOut[i][l].x1+2;
-            _GeneralOut[i][l].y2 = _GeneralOut[i][l].y1+2;
-
-    //        if(l>5)print = false;
-            for(int k=0; k<multipix_height; k++){
-              for(int m=0; m<multipix_width; m++){
-                _GeneralOut[i][l].colors.push_back(_Image.at<Vec3d>(Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m)));
-//std::cout << "coloradded :" <<_Image.at<Vec3d>(Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m)) <<'\n';
-  //              std::cout << "at:  :" <<Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m) <<'\n';
-              }
+        //  std::cout<< "define xy2: \n";
+          _GeneralOut[i][l].x2 = x_act+2;
+          _GeneralOut[i][l].y2 = y_act+2;
+        //  if(l>5)print = false;
+        //  std::cout<< "set color vec and  coll matrix";
+          int counter = 0;
+          for(int k=0; k<multipix_height; k++){
+            for(int m=0; m<multipix_width; m++){
+        //  std::cout<< k<<" . "<<m<<"\n";
+        //std::cout << "colorcounter: "<<counter << '\n';
+              _GeneralOut[i][l].colors[counter] = _Image.at<Vec3d>(Point(x_act+k,y_act+m));
+          //    _CollMat[x_act+k][y_act+m]=   (_CollMat[x_act+k][y_act+m])+1;
+                counter++;
+          //  if(_CollMat[x_act+k][y_act+m]>3)std::cout<<_CollMat[x_act+k][y_act+m]<<"\n";
+        // std::cout << "coloradded :" <<_Image.at<Vec3d>(Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m)) <<'\n';
+        // std::cout << "at:  :" <<Point(_GeneralOut[i][l].x1+k,_GeneralOut[i][l].y1+m) <<'\n';
             }
-
           }
         }
-        std::cout<< "multipixel written to refference \n";
+      }
+      */
+      int mpixcount = 0;
+      for (int i=0; i<mems_h; i++)
+      {
+        if(i%2==0)  std::cout << "h is " << i <<'\n';
+
+        for (int l=0; l<mems_w; l++)
+        {
+          if(l%1==0)    std::cout << "w is " << l <<'\n';
+          int n= rand()% not_sampled_yet.size();
+          MultiPix mpixel;
+          int x_act = not_sampled_yet[n].first;
+          int y_act = not_sampled_yet[n].second;
+        // std::cout<< "define xy1: \n";
+          mpixel.x1 = x_act;
+          mpixel.y1 = y_act;
+          mpixel.x2 = x_act+2;
+          mpixel.y2 = y_act+2;
+          int counter = 0;
+          for(int k=0; k<multipix_height; k++){
+            for(int m=0; m<multipix_width; m++){
+              mpixel.colors[counter] = _Image.at<Vec3d>(Point(x_act+k,y_act+m));
+              counter++;
+              mpixcount++;
+            }
+          }
+          mpixel.xc = l;
+          mpixel.yc = i;
+          mpoutput.push_back(mpixel);
+        }
+      }
+        std::cout<< "multipixel written to refference: "<<mpixcount<<"\n";
+        return mpoutput;
         /*
           MultiPix m_pix;
 
@@ -380,7 +425,6 @@ public:
 private:
   int _Amount;
   Mat _Image;
-  std::vector<std::vector<MultiPix>> _GeneralOut;
 //  Interface _Out;
 //  Collmap _Overlapmap;
   int _X;
