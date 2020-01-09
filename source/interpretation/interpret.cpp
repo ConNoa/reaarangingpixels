@@ -2,7 +2,7 @@
 #include <opencv2/opencv.hpp> //image operations
 #include "../pixel.hpp"
 #include <time.h>             //time measuring & seed
-
+#include "../superpixel.hpp"
 
 using namespace cv;
 #define PI 3.14159265
@@ -12,8 +12,8 @@ public:
   Interpreter(int X, int Y):
       _X(X),
       _Y(Y),
-      _X_Buckets(300), //maybe clever function?    //40 ist gut!?
-      _Y_Buckets(200)  //clever function?
+      _X_Buckets(40), //maybe clever function?    //40 ist gut!?
+      _Y_Buckets(40)  //clever function?
       {}
 
       //no INTERPRETATION
@@ -809,12 +809,49 @@ public:
         std::cout<<"Pattern has:"<<_Pattern.size()<<"samples\n";
       }
 
+      void set_pattern_s(std::vector<Superpixel_3>& pattern){
+        _Pattern_s=pattern;
+        _Buckets=std::vector<std::vector<Pixel_d> >();
+        //std::cout<<_Pattern.size()<<"psize.....\n";
+         _Check_pic=Mat(_Y, _X, CV_8UC3, Scalar(0,0,0));//might be changed to a 2D array of booleans?
+        //Prepare Buckets:
+        /*correct image scale? */
+        std::cout<<"before Pattern has:"<<_Pattern_s.size()<<"samples\n";
+
+        std::cout<<"!WARNING! input image has to fit bucket-sys!\n";
+        //best Bucket amount?
+        //int samples_amount=_Pattern.size();
+        for(int x=0; x<_X_Buckets; x++)
+        {
+          for(int y=0; y<_Y_Buckets; y++)
+          {
+            std::vector<Pixel_d> vec;
+            _Buckets.push_back(vec);
+          }
+        }
+
+
+        int N;
+        for(std::vector<Superpixel_3>::iterator i = _Pattern_s.begin(); i != _Pattern_s.end(); ++i)
+        {
+          for(std::vector<Pixel_d>::iterator p = i->pixelpart.begin(); p !=  i->pixelpart.end(); ++p){
+          N=xy_to_N((*p).x, (*p).y);  //get bucket
+          std::cout << "n bucket is: "<< N << '\n';
+          _Buckets[N].push_back(*p);
+          _Check_pic.at<Vec3b>(Point((*p).x, (*p).y))[0]=100; //already sampled
+          }
+        }
+        _no_interpret=no_interpretation();
+        std::cout<<"Pattern has:"<<_Pattern_s.size()<<"samples\n";
+      }
+
 private:
   int _X;
   int _Y;
   int _X_Buckets;
   int _Y_Buckets;
   std::vector<Pixel_d> _Pattern;
+  std::vector<Superpixel_3> _Pattern_s;
   std::vector<std::vector<Pixel_d> > _Buckets;
   Mat _no_interpret;
   Mat _Check_pic;

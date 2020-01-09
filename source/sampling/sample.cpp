@@ -201,8 +201,8 @@ void fill_GeneralOut(){
       }
       Pixel_d px_uplft;
 
-  //    int counter2 = 0;
-  //    int counter1 = 0;
+      //    int counter2 = 0;
+      //    int counter1 = 0;
       for (int i=0; i<_Amount; i++)
       {
         Superpixel_3 suppix;
@@ -211,7 +211,7 @@ void fill_GeneralOut(){
         int picked_x = not_sampled_yet[n].first;
         int picked_y = not_sampled_yet[n].second;
 
-  //      if(counter1 <2)std::cout<<"\n Pixel "<<" x:  "<<picked_x<<"   y:  "<<picked_y<<"   \n";
+        //      if(counter1 <2)std::cout<<"\n Pixel "<<" x:  "<<picked_x<<"   y:  "<<picked_y<<"   \n";
 
         px_uplft.x= picked_x;
         px_uplft.y= picked_y;
@@ -222,11 +222,11 @@ void fill_GeneralOut(){
           //suppix.pixelarray[i-1] = (px_uplft);
           //-------another try with std::vector
           suppix.pixelpart.push_back(px_uplft);
-//debug          if(counter2 <2)std::cout<<"\n Pixel "<<i<<" vom superpixel "<<counter2<<" mit den Werten:  "<<"x:  "<<px_uplft.x<<"   y:  "<<px_uplft.y<<"   ";
+          //debug          if(counter2 <2)std::cout<<"\n Pixel "<<i<<" vom superpixel "<<counter2<<" mit den Werten:  "<<"x:  "<<px_uplft.x<<"   y:  "<<px_uplft.y<<"   ";
           px_uplft.x = px_uplft.x+1;
 
           if(p==2||p==5){
-//debug            if(counter2 <2)std::cout<<" pickedx vorm sprung"<< picked_x<<"\n";
+            //debug            if(counter2 <2)std::cout<<" pickedx vorm sprung"<< picked_x<<"\n";
             px_uplft.y = px_uplft.y+1;
             px_uplft.x = px_uplft.x-3;
           }
@@ -261,7 +261,7 @@ void fill_GeneralOut(){
             not_sampled_yet.push_back(std::pair<int,int>(x,y));
           }
         }
-//für sizeof mems werden multipxelerstellt zuerst das x1,y1, x2,y2 dann sollen die farben in den color vec geworfen werden, zum schluss müssen xc undyc noch  i und l  values bekommen
+      //für sizeof mems werden multipxelerstellt zuerst das x1,y1, x2,y2 dann sollen die farben in den color vec geworfen werden, zum schluss müssen xc undyc noch  i und l  values bekommen
       //  bool print = true;
       /*
       for (int i=0; i<mems_h; i++)
@@ -313,7 +313,7 @@ void fill_GeneralOut(){
           MultiPix mpixel;
           int x_act = not_sampled_yet[n].first;
           int y_act = not_sampled_yet[n].second;
-        // std::cout<< "define xy1: \n";
+          std::cout<< "define xy1: \n";
           mpixel.x1 = x_act;
           mpixel.y1 = y_act;
           mpixel.x2 = x_act+2;
