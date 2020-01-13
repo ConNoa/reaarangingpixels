@@ -97,7 +97,7 @@ public:
    	temp3 = cvCreateImage( size, d, nChan);
 
    	ssim_map = cvCreateImage( size, d, nChan);
-   	/*************************** END INITS **********************************/
+   	// *************************** END INITS **********************************
 
 
    	//////////////////////////////////////////////////////////////////////////
@@ -119,12 +119,13 @@ public:
 
    	cvSmooth( img1_img2, sigma12, CV_GAUSSIAN, 11, 11, 1.5 );
    	cvAddWeighted( sigma12, 1, mu1_mu2, -1, 0, sigma12 );
-
+    */
 
    	//////////////////////////////////////////////////////////////////////////
    	// FORMULA
 
    	// (2*mu1_mu2 + C1)
+    /*
    	cvScale( mu1_mu2, temp1, 2 );
    	cvAddS( temp1, cvScalarAll(C1), temp1 );
 

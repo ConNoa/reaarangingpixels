@@ -131,18 +131,18 @@ int main(int argc, char** argv )
             //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
   //          Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisionmap); // Hier wird ein sampler erstellt!
       Sampler sampler(fixed_mems_amount, ref_image_img); // Hier wird ein sampler erstellt!
-
+/*
             //Superpixelsampling with Superpixel_3
             std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Superpixel_3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
             std::vector<std::pair<std::string,std::vector<Superpixel_3>>> superpixelpattern; //speichert die verschiedenen samples!
             superpixelpattern.push_back(std::pair<std::string,std::vector<Superpixel_3> >("SRand",sampler.random_superpixel()));
-/*
+    */
       //MultiPix sampling
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
       samples_out_of_picture = sampler.random_multipix();
       std::cout<<"returnded\n";
 
-*/
+
 
 
       		  //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
@@ -150,14 +150,14 @@ int main(int argc, char** argv )
 
       //--------------------End of new Sampler --------------------------
 
-
     //      Interpreter interpreter(mems_w,mems_h);
-      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
+//      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
 
 
 
 
       /*-----------------Old Interpreter, imwrite---------------------*/
+      /*
       Mat output;
       Mat eval_out;
       for(std::vector<std::pair<std::string,std::vector<Superpixel_3> > >::iterator pattern= superpixelpattern.begin(); pattern != superpixelpattern.end(); ++pattern)
@@ -169,7 +169,7 @@ int main(int argc, char** argv )
         imwrite("result_"+name+".png",output);
       }
 
-
+*/
 		std::cout<<"#Visualizing done!\n";
     }
 }

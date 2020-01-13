@@ -249,15 +249,14 @@ void fill_GeneralOut(){
         int multipix_height = multipix_width;
         int mems_w = 512;
         int mems_h = 320;
-        int pix_ammount = multipix_width*multipix_width;
+        int pix_ammount = mems_h*mems_w;
         int border = multipix_width-1;  // bordercondition
-        std::vector<MultiPix> mpoutput;
+        std::vector<MultiPix> mpoutput(pix_ammount);
         //Preparation
         std::vector<std::pair<int, int> > not_sampled_yet;
-        for(int x=0; x<_X-border; x++)
-        {
-          for(int y=0; y<_Y-border; y++)
-          {
+        for(int x=0; x<_X-border; x++){
+  //        std::cout<< "x und y sind  "<< _X-border <<" und "<< _Y-border<<"\n";
+          for(int y=0; y<_Y-border; y++){
             not_sampled_yet.push_back(std::pair<int,int>(x,y));
           }
         }
@@ -308,28 +307,47 @@ void fill_GeneralOut(){
 
         for (int l=0; l<mems_w; l++)
         {
-          if(l%1==0)    std::cout << "w is " << l <<'\n';
-          int n= rand()% not_sampled_yet.size();
-          MultiPix mpixel;
-          int x_act = not_sampled_yet[n].first;
-          int y_act = not_sampled_yet[n].second;
-          std::cout<< "define xy1: \n";
-          mpixel.x1 = x_act;
-          mpixel.y1 = y_act;
-          mpixel.x2 = x_act+2;
-          mpixel.y2 = y_act+2;
-          int counter = 0;
-          for(int k=0; k<multipix_height; k++){
-            for(int m=0; m<multipix_width; m++){
-              mpixel.colors[counter] = _Image.at<Vec3d>(Point(x_act+k,y_act+m));
-              counter++;
-              mpixcount++;
+            if(l%1==0)    std::cout << "w is " << l <<'\n';
+            int n= rand()% not_sampled_yet.size();
+            MultiPix mpixel;
+            int x_act = not_sampled_yet[n].first;
+            int y_act = not_sampled_yet[n].second;
+            std::cout<< "Size of not-sampled-yet: "<< not_sampled_yet.size()<<"\n";
+
+            std::cout<< "define xy1: \n";
+            mpixel.x1 = x_act;
+            mpixel.y1 = y_act;
+            mpixel.x2 = x_act+2;
+            mpixel.y2 = y_act+2;
+
+            int counter = 0;
+            for(int k=0; k<multipix_height; k++){
+              for(int m=0; m<multipix_width; m++){
+              //  std::cout<< "counter = " <<counter<<" \n";
+
+                mpixel.colors[counter] = _Image.at<Vec3d>(Point(x_act+k,y_act+m));
+                counter++;
+                mpixcount++;
+              }
             }
-          }
-          mpixel.xc = l;
-          mpixel.yc = i;
-          mpoutput.push_back(mpixel);
+            std::cout<< "break 1 \n";
+
+            mpixel.xc = l;
+            std::cout<< "break 2 \n";
+
+            mpixel.yc = i;
+            std::cout<< "break 3 \n";
+
+            not_sampled_yet[n]=not_sampled_yet.back();
+            not_sampled_yet.pop_back();
+            std::cout<< "break 4 \n";
+
+            mpoutput.push_back(mpixel);
+            std::cout<< "break 5 \n";
+
         }
+
+
       }
         std::cout<< "multipixel written to refference: "<<mpixcount<<"\n";
         return mpoutput;
