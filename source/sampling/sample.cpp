@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp> //image operations
 #include "../superpixel.hpp"
-
+#include <cmath>
 #include "../pixel.hpp"
 #include "../multipix.hpp"
 #include <time.h>             //time measuring & seed
 #include <math.h>             //ceil, sqrt etc
 #include "../collmap.hpp"
+#include <opencv2/core/matx.hpp>
+
 
 using namespace cv;
 
@@ -15,11 +17,15 @@ public:
   //expects CV_8UC3 image!
   Sampler(int amount, Mat const& image):
       _Amount(amount),
-      _Image(image)
+      _Image(image),
+      _SampleMap_x(),
+      _SampleMap_y()
       //_Out(generalout),
   //    _Overlapmap(brigthnesmap)
       {
         srand(time(NULL));  //SEED
+        _Beamer_Resolution_x = 1920;
+        _Beamer_Resolution_y = 1080;
         _X=_Image.cols;
         _Y=_Image.rows;
       }
@@ -87,71 +93,27 @@ public:
     return output_pattern;
   }
 
-/*
-  std::vector<Pixel_d>  calc_halton_compressed(){
-      std::cout<<"sampling halton compressed\n";
-      std::vector<Pixel_d> output_pattern;
-
-      //SAMPLING
-      cv::Size size = _Image.size();
-      //------------newstuff-------------------
-      double count_x = 0;
-      double count_y = 0;
-
-      //----------------------------------------
-      int p = 2; int q = 3;
-      Pixel_d pix;
-
-      for (int i=1; i<_Amount+1; i++)
-      {
-        double fx = 1; double fy = 1;
-        int ix = i; int iy = i;
-        double rx = 0; double ry = 0;
-
-        while (ix > 0) {
-        	fx /= p;
-        	rx += fx * (ix % p);
-        	ix = ix / p;
-        }
-
-        while (iy > 0) {
-        	fy /= q;
-        	ry += fy * (iy % q);
-        	iy = iy / q;
-        }
-        double x = rx * size.width;
-        double y = ry * size.height;
-
-        pix.x= x;
-        pix.y= y;
-
-        pix.color = _Image.at<Vec3d>(Point(pix.x,pix.y));
-
-        pix.x= count_x;
-        pix.y= count_y;
-
-        output_pattern.push_back(pix);
-        count_x = count_x+1;
-        if (int(count_x)%int(_Output_x) == 0){
-          count_x = 0;
-          count_y = count_y+1;
-        }
-
-      }
-      return output_pattern;
-    }
-*/
 
   //expects CV_8UC3 image!
   void set_image(Mat const& image){
     _Image=image;
   }
 
-void fill_GeneralOut(){
+  void fill_GeneralOut(){}
 
+  int compute_multipix_size(){
+    int pow_seed = 1;
+    int pixel_ammount_beamer = _Beamer_Resolution_x*_Beamer_Resolution_y;
 
+    while((_Amount*pow(pow_seed, 2))< pixel_ammount_beamer){
+      ++pow_seed;
+    }
+    --pow_seed;
 
-}
+    std::cout << "Multipix Size is set to "<< pow_seed << '\n';
+
+    return pow_seed;
+  }
 
   std::vector<Pixel_d>  calc_rand_d(){
       std::cout<<"sampling random\n";
@@ -260,6 +222,10 @@ void fill_GeneralOut(){
             not_sampled_yet.push_back(std::pair<int,int>(x,y));
           }
         }
+        //create map?
+
+
+
       //für sizeof mems werden multipxelerstellt zuerst das x1,y1, x2,y2 dann sollen die farben in den color vec geworfen werden, zum schluss müssen xc undyc noch  i und l  values bekommen
       //  bool print = true;
       /*
@@ -390,6 +356,96 @@ void fill_GeneralOut(){
       //  return output_pattern;*/
       }
 
+  std::map<std::pair<int, int>, Vec4b> create_random_multipix_map(){
+    //compute multipix size
+    int multipixsize = compute_multipix_size();
+
+    //evtl noch bessere morderconditions?
+    //create Vector with all possible pix positions
+    std::vector<std::pair<int, int> > not_sampled_yet;
+
+    for(int x=0; x<_X-multipixsize; x++){
+      for(int y=0; y<_Y-multipixsize; y++){
+        not_sampled_yet.push_back(std::pair<int,int>(x,y));
+      }
+    }
+    std::cout<< "Created Vec not-sampled-yet with size: "<< not_sampled_yet.size()<<"\n";
+    int pos_pos = not_sampled_yet.size();
+    //-----
+
+    for(int i=0; i<_Amount; i++){
+      int n= rand()% not_sampled_yet.size();
+      auto pos_act = not_sampled_yet[n];
+      int x_act = not_sampled_yet[n].first;
+      int y_act = not_sampled_yet[n].second;
+      not_sampled_yet[n]=not_sampled_yet.back();
+      not_sampled_yet.pop_back();
+
+//      std::cout<< "Size of sampled: "<< pos_pos-not_sampled_yet.size()<<"\n";
+      std::cout<< "auto ptr_x_map = _SampleMap_x.find(pos_act.first); : =   "<<pos_act.first<< " / "<<pos_act.second<<"\n";
+
+      for(int k=0; k<multipixsize; k++){
+        for(int m=0; m<multipixsize; m++){
+          auto ptr_x_map = _SampleMap_x.find(pos_act.first);
+        //  std::cout<< "auto ptr_x_map = _SampleMap_x.find(pos_act.first); : =   "<<<< "\n";
+          if(ptr_x_map == _SampleMap_x.end() ) {
+              // x value not found
+              Vec3d pointcolor =  _Image.at<Vec3d>(Point(x_act+k,y_act+m));
+              Vec4d hit = Vec4d(pointcolor[0],pointcolor[1],pointcolor[2], 1);
+              std::cout<< "in the hit: "<< hit[0]<< "in the hit: "<< hit[1]<< "in the hit: "<< hit[2]<< "in the hit: "<< hit[3]<<"\n";
+              _SampleMap_x[x_act+k][y_act+m] = hit;
+//               std::cout<<_SampleMap_x.size()<< "Number of x collums used"<<"\n";
+              } else {
+
+
+                //std::cout<< &ptr_x_map<< "prtxmap is full on  the place: "<< x_act+k<< " , "<< y_act+m<< "\n";
+
+/*
+              auto ptr_y_map = &ptr_x_map.find(y_act+m);
+              if(ptr_y_map == ptr_x_map.end() ) {
+              // x value  found but y not
+               Vec3d pointcolor =  _Image.at<Vec3d>(Point(x_act+k,y_act+m));
+               Vec4d hit = Vec4d(pointcolor[0],pointcolor[1],pointcolor[2], 1);
+               _SampleMap_x[x_act+k][y_act+m] = hit;
+               std::cout<< "in the hit: "<< hit[0]<< "in the hit: "<< hit[1]<< "in the hit: "<< hit[2]<< "in the hit: "<< hit[3]<<"\n";
+             }
+              else {
+              // found
+            //  Vec4d hit = _SampleMap_x[x_act+k][y_act+m];
+            //  hit[3] = hit[3]+1;
+//            std::cout<< "in the hit: "<< hit[0]<< "in the hit: "<< hit[1]<< "in the hit: "<< hit[2]<< "in the hit: "<< hit[3]<<"\n";
+        //    std::cout<< "shit"<<"\n";
+                }
+*/
+            // found
+          }
+
+
+
+}
+}
+}
+
+
+
+    }
+
+    //for i< ammount
+      //get random pos xy
+      //set actual xy,
+      //delete random pos from vec
+
+      //loop over width and heigth of multipix
+      //for each xy-pos of multipix:
+          //chek if in map x
+            // 1 ->check if in map y
+                //1 -> set layer value++;
+                //0 -> get rgb, set layervalue 1
+            // 0 ->create x,y and get rgb, set layervalue 1
+
+      //return mapmap
+
+
 
 /*
   std::vector<Pixel_d>  calc_rand_d_compressed(){
@@ -443,10 +499,21 @@ void fill_GeneralOut(){
 private:
   int _Amount;
   Mat _Image;
+  std::map<std::pair<int,int>,Vec4b>> _SampleMap_xy;
+//  std::map< int,std::map<int,Vec4b> > _SampleMap_x;
+//  std::map<int, Vec4b> _SampleMap_y;
+
 //  Interface _Out;
 //  Collmap _Overlapmap;
+  //FullHD Beamer Resolution
+  int _Beamer_Resolution_x;
+  int _Beamer_Resolution_y;
+
+
   int _X;
   int _Y;
+
+
 
 };
 

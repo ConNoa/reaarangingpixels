@@ -11,6 +11,7 @@
 #include "./superpixel.hpp"
 #include "./multipix.hpp"
 #include <array>
+#include <opencv2/core/matx.hpp>
 //#include "./collmap.hpp"
 
 
@@ -75,8 +76,6 @@ int main(int argc, char** argv )
   }
   std::cout<<"loading of reference images done!\n\n";
 
-
-
 //SAMPLING //////////////////////////////////////////////////////////////////////////////
 
 	int sample_amount = ref_images[0].second.cols *ref_images[0].second.rows * 0.5*0.5*0.5; // How many samples? !achtung grid images brauchen passenden wert!
@@ -99,9 +98,10 @@ int main(int argc, char** argv )
       std::cout << "disp_pix_height = " << disp_pix_height<<'\n';
       std::vector<std::vector<int> > coll_mat(disp_pix_height, std::vector<int>(disp_pix_width,0));
       std::cout << "Coll_mat_created" << '\n';
-      std::vector<std::vector<MultiPix> > interface (512, std::vector<MultiPix>(320));
       std::cout << "Interface created" << '\n';
-      std::vector<MultiPix> samples_out_of_picture;
+
+      std::map<std::pair<int, int>, Vec4b> _SampledPixels;
+
 
 
       /* -----------Old Sampler for Single Pixels--------------
@@ -139,7 +139,11 @@ int main(int argc, char** argv )
     */
       //MultiPix sampling
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
-      samples_out_of_picture = sampler.random_multipix();
+
+
+      _SampledPixels = sampler.create_random_multipix_map();
+
+
       std::cout<<"returnded\n";
 
 
