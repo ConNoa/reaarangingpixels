@@ -18,8 +18,8 @@ public:
   Sampler(int amount, Mat const& image):
       _Amount(amount),
       _Image(image),
-      _SampleMap_x(),
-      _SampleMap_y()
+  //    _SampleMap_x(),
+      _SampleMap_xy()
       //_Out(generalout),
   //    _Overlapmap(brigthnesmap)
       {
@@ -382,41 +382,29 @@ public:
       not_sampled_yet.pop_back();
 
 //      std::cout<< "Size of sampled: "<< pos_pos-not_sampled_yet.size()<<"\n";
-      std::cout<< "auto ptr_x_map = _SampleMap_x.find(pos_act.first); : =   "<<pos_act.first<< " / "<<pos_act.second<<"\n";
+  //    std::cout<< "auto ptr_x_map = _SampleMap_x.find(pos_act.first); : =   "<<pos_act.first<< " / "<<pos_act.second<<"\n";
 
       for(int k=0; k<multipixsize; k++){
         for(int m=0; m<multipixsize; m++){
-          auto ptr_x_map = _SampleMap_x.find(pos_act.first);
+          auto pos_loop = pos_act;
+          pos_loop.first = pos_loop.first + k;
+          pos_loop.second = pos_loop.second + m;
+          auto ptr_x_map = _SampleMap_xy.find(pos_loop);
         //  std::cout<< "auto ptr_x_map = _SampleMap_x.find(pos_act.first); : =   "<<<< "\n";
-          if(ptr_x_map == _SampleMap_x.end() ) {
+          if(ptr_x_map == _SampleMap_xy.end() ) {
               // x value not found
               Vec3d pointcolor =  _Image.at<Vec3d>(Point(x_act+k,y_act+m));
               Vec4d hit = Vec4d(pointcolor[0],pointcolor[1],pointcolor[2], 1);
-              std::cout<< "in the hit: "<< hit[0]<< "in the hit: "<< hit[1]<< "in the hit: "<< hit[2]<< "in the hit: "<< hit[3]<<"\n";
-              _SampleMap_x[x_act+k][y_act+m] = hit;
-//               std::cout<<_SampleMap_x.size()<< "Number of x collums used"<<"\n";
+              //std::cout<< "in the hit: "<< hit[0]<< "in the hit: "<< hit[1]<< "in the hit: "<< hit[2]<< "in the hit: "<< hit[3]<<"\n";
+              _SampleMap_xy[pos_act] = hit;
               } else {
+                Vec4d found_value = _SampleMap_xy[pos_act];
+                found_value[3] = found_value[3]+1;
+                _SampleMap_xy[pos_act] = found_value;
+                std::cout<< "changed value"<<"\n";
+                std::cout<< "in the found_value: "<< found_value[0]<< "in the found_value: "<< found_value[1]<< "in the found_value: "<< found_value[2]<< "in the found_value: "<< found_value[3]<<"\n";
 
 
-                //std::cout<< &ptr_x_map<< "prtxmap is full on  the place: "<< x_act+k<< " , "<< y_act+m<< "\n";
-
-/*
-              auto ptr_y_map = &ptr_x_map.find(y_act+m);
-              if(ptr_y_map == ptr_x_map.end() ) {
-              // x value  found but y not
-               Vec3d pointcolor =  _Image.at<Vec3d>(Point(x_act+k,y_act+m));
-               Vec4d hit = Vec4d(pointcolor[0],pointcolor[1],pointcolor[2], 1);
-               _SampleMap_x[x_act+k][y_act+m] = hit;
-               std::cout<< "in the hit: "<< hit[0]<< "in the hit: "<< hit[1]<< "in the hit: "<< hit[2]<< "in the hit: "<< hit[3]<<"\n";
-             }
-              else {
-              // found
-            //  Vec4d hit = _SampleMap_x[x_act+k][y_act+m];
-            //  hit[3] = hit[3]+1;
-//            std::cout<< "in the hit: "<< hit[0]<< "in the hit: "<< hit[1]<< "in the hit: "<< hit[2]<< "in the hit: "<< hit[3]<<"\n";
-        //    std::cout<< "shit"<<"\n";
-                }
-*/
             // found
           }
 
@@ -499,7 +487,7 @@ public:
 private:
   int _Amount;
   Mat _Image;
-  std::map<std::pair<int,int>,Vec4b>> _SampleMap_xy;
+  std::map<std::pair<int,int>,Vec4b> _SampleMap_xy;
 //  std::map< int,std::map<int,Vec4b> > _SampleMap_x;
 //  std::map<int, Vec4b> _SampleMap_y;
 
