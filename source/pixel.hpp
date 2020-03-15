@@ -24,11 +24,11 @@ class Pixel_d
 {
 public :
 
-  Pixel_d(unsigned int = 0, unsigned int = 0);
+  Pixel_d(double = 0, double = 0);
   void print(std::ostream&) const;
 
-  unsigned int x;
-  unsigned int y;
+  double x;
+  double y;
   Vec3d color;
 };
 

@@ -136,9 +136,9 @@ public:
       {
         //std::cout<<i<<"\n";
         int n= rand()% not_sampled_yet.size();
-        pix.x= not_sampled_yet[n].first;
-        pix.y= not_sampled_yet[n].second;
-        pix.color = _Image.at<Vec3d>(Point(pix.x,pix.y));
+        pix.x= (double)not_sampled_yet[n].first;
+        pix.y= (double)not_sampled_yet[n].second;
+        pix.color = _Image.at<Vec3d>(Point((int)pix.x,(int)pix.y));
         not_sampled_yet[n]=not_sampled_yet.back();
         not_sampled_yet.pop_back();
         output_pattern.push_back(pix);

@@ -24,7 +24,7 @@ std::ostream& operator<<(std::ostream& os, const Pixel& a)
 }
 
 //////////////////////////
-Pixel_d::Pixel_d(unsigned int a, unsigned int b)
+Pixel_d::Pixel_d(double a, double b)
   : x(a),
     y(b),
     color()
@@ -32,7 +32,7 @@ Pixel_d::Pixel_d(unsigned int a, unsigned int b)
 
 void Pixel_d::print(std::ostream& os) const
 {
-  os << "Pixel[" << (int)x << ',' << (int)y << "]("
+  os << "Pixel[" << (double)x << ',' << (double)y << "]("
      << color[0] << ','
      << color[1] << ','
      << color[2] << ')';

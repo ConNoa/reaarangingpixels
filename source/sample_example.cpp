@@ -12,6 +12,7 @@
 #include "./multipix.hpp"
 #include <array>
 #include <opencv2/core/matx.hpp>
+#include <algorithm>
 //#include "./collmap.hpp"
 
 
@@ -43,6 +44,16 @@ void getdir (std::string dir, std::vector<std::string> &files)
 // 	the seperate vectors are stored in the pattern vector
 //
 //	-to visualize the output, the interpreter is used
+
+bool compareBy_xValue(const Pixel_d &a, const Pixel_d &b)
+{
+    return a.x < b.x;
+}
+bool compareBy_yValue(const Pixel_d &a, const Pixel_d &b)
+{
+    return a.y < b.y;
+}
+
 
 int main(int argc, char** argv )
 {
@@ -101,7 +112,7 @@ int main(int argc, char** argv )
       std::cout << "Interface created" << '\n';
 
       std::map<std::pair<int, int>, Vec4b> _SampledPixels;
-
+      std::vector<Pixel_d> _RandPixels;
 
 
       /* -----------Old Sampler for Single Pixels--------------
@@ -128,34 +139,42 @@ int main(int argc, char** argv )
 
 
       //-----------New Sampler for Superpixel_3/MultiPix Pixels--------------
-            //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
-  //          Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisionmap); // Hier wird ein sampler erstellt!
+      //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
+      //          Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisionmap); // Hier wird ein sampler erstellt!
       Sampler sampler(fixed_mems_amount, ref_image_img); // Hier wird ein sampler erstellt!
-/*
+        /*
             //Superpixelsampling with Superpixel_3
             std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Superpixel_3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
             std::vector<std::pair<std::string,std::vector<Superpixel_3>>> superpixelpattern; //speichert die verschiedenen samples!
             superpixelpattern.push_back(std::pair<std::string,std::vector<Superpixel_3> >("SRand",sampler.random_superpixel()));
-    */
-      //MultiPix sampling
+                */
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
 
+      //  _SampledPixels = sampler.create_random_multipix_map();
+      _RandPixels = sampler.calc_rand_d();
+      std::cout<<"returnded rand Pix vec\n";
 
-      _SampledPixels = sampler.create_random_multipix_map();
+      std::sort(_RandPixels.begin(), _RandPixels.end(), compareBy_yValue);
+      std::cout<<"Pixelvec sorted by y val\n";
+      double ymin = _RandPixels.begin()->y;
+      std::cout<<"ymin = "<<ymin<<"\n";
+      double ymax = _RandPixels.back().y;
+      std::cout<<"ymax = "<<ymax<<"\n";
+
+      std::sort(_RandPixels.begin(), _RandPixels.end(), compareBy_xValue);
+      std::cout<<"Pixelvec sorted by x val\n";
+      double xmin = _RandPixels.begin()->x;
+      std::cout<<"xmin = "<<xmin<<"\n";
+      double xmax = _RandPixels.back().x;
+      std::cout<<"xmax = "<<xmax<<"\n";
 
 
-      std::cout<<"returnded\n";
-
-
-
-
-      		  //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
-      		  std::cout<<"#Sampling done!\n";
+      //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
+      std::cout<<"#Sampling done!\n";
 
       //--------------------End of new Sampler --------------------------
-
-    //      Interpreter interpreter(mems_w,mems_h);
-//      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
+      //      Interpreter interpreter(mems_w,mems_h);
+      //      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
 
 
 
@@ -174,6 +193,10 @@ int main(int argc, char** argv )
       }
 
 */
-		std::cout<<"#Visualizing done!\n";
+      std::cout<<"#Visualizing done!\n";
+      std::cout<<"Starting with next file......\n";
+      std::cout<<"\n";
+      std::cout<<"\n";
+      std::cout<<"\n";
     }
 }
