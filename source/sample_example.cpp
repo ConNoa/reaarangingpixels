@@ -13,8 +13,11 @@
 #include <array>
 #include <opencv2/core/matx.hpp>
 #include <algorithm>
+#include <math.h>       /* sin */
+#include "./point.hpp"
 //#include "./collmap.hpp"
 
+#define PI 3.14159265
 
 using namespace cv;
 
@@ -154,11 +157,15 @@ int main(int argc, char** argv )
       _RandPixels = sampler.calc_rand_d();
       std::cout<<"returnded rand Pix vec\n";
 
+      //compute triangle arround all points
+
       std::sort(_RandPixels.begin(), _RandPixels.end(), compareBy_yValue);
       std::cout<<"Pixelvec sorted by y val\n";
       double ymin = _RandPixels.begin()->y;
       std::cout<<"ymin = "<<ymin<<"\n";
       double ymax = _RandPixels.back().y;
+      double ycenter = (ymax-ymin)/2;
+
       std::cout<<"ymax = "<<ymax<<"\n";
 
       std::sort(_RandPixels.begin(), _RandPixels.end(), compareBy_xValue);
@@ -167,6 +174,23 @@ int main(int argc, char** argv )
       std::cout<<"xmin = "<<xmin<<"\n";
       double xmax = _RandPixels.back().x;
       std::cout<<"xmax = "<<xmax<<"\n";
+      double xcenter = (xmax-xmin)/2;
+      //1.05 for a bit bigger triangle
+
+      double inner_radius = 1.05*sqrt(pow(ycenter, 2)+ pow(xcenter,2));
+      std::cout<<"ir = "<<inner_radius<<"\n";
+
+      double hyp= sin(90*PI/180)*inner_radius/sin (30*PI/180);
+      std::cout<<"hyp = "<<hyp<<"\n";
+
+      double b = sin(60*PI/180)*hyp/sin (90*PI/180);
+      Point_d P_c;
+
+      //Point_d P_1(P_c.x, P_c.y-hyp);
+      //Point_d P_2(P_c.x-b, P_c.y+inner_radius);
+      //Point_d P_3(P_c.x+b, P_c.y+inner_radius);
+
+
 
 
       //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
