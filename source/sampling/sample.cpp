@@ -8,6 +8,8 @@
 #include <math.h>             //ceil, sqrt etc
 #include "../collmap.hpp"
 #include <opencv2/core/matx.hpp>
+#include "../point.hpp"
+
 
 
 using namespace cv;
@@ -114,6 +116,64 @@ public:
 
     return pow_seed;
   }
+
+
+    std::vector<Point_d> sample_rand_points(){
+      std::cout<<"sampling random points\n";
+      std::vector<Point_d> output_pattern;
+
+      //PREPARE:
+      std::vector<std::pair<int, int> > not_sampled_yet;
+      for(int x=0; x<_X; x++)
+      {
+        for(int y=0; y<_Y; y++)
+        {
+          not_sampled_yet.push_back(std::pair<int,int>(x,y));
+        }
+      }
+      //SAMPLING
+      Point_d pix;
+      for (int i=0; i<_Amount; i++)
+      {
+        //std::cout<<i<<"\n";
+        int n= rand()% not_sampled_yet.size();
+        pix.x= (double)not_sampled_yet[n].first;
+        pix.y= (double)not_sampled_yet[n].second;
+        not_sampled_yet[n]=not_sampled_yet.back();
+        not_sampled_yet.pop_back();
+        output_pattern.push_back(pix);
+      }
+      return output_pattern;
+
+    }
+
+      std::vector<double> sample_rand_coords(){
+        std::cout<<"sampling random points\n";
+        std::vector<double> output_pattern;
+
+        //PREPARE:
+        std::vector<std::pair<int, int> > not_sampled_yet;
+        for(int x=0; x<_X; x++)
+        {
+          for(int y=0; y<_Y; y++)
+          {
+            not_sampled_yet.push_back(std::pair<int,int>(x,y));
+          }
+        }
+        //SAMPLING
+        for (int i=0; i<_Amount; i++)
+        {
+          //std::cout<<i<<"\n";
+          int n= rand()% not_sampled_yet.size();
+          output_pattern.push_back((double)not_sampled_yet[n].first);
+          output_pattern.push_back((double)not_sampled_yet[n].second);
+          not_sampled_yet[n]=not_sampled_yet.back();
+          not_sampled_yet.pop_back();
+        }
+        return output_pattern;
+
+      }
+
 
   std::vector<Pixel_d>  calc_rand_d(){
       std::cout<<"sampling random\n";

@@ -15,6 +15,9 @@
 #include <algorithm>
 #include <math.h>       /* sin */
 #include "./point.hpp"
+#include "librarys/delaunator.hpp"
+#include <cstdio>
+
 //#include "./collmap.hpp"
 
 #define PI 3.14159265
@@ -47,12 +50,21 @@ void getdir (std::string dir, std::vector<std::string> &files)
 // 	the seperate vectors are stored in the pattern vector
 //
 //	-to visualize the output, the interpreter is used
-
+/*
 bool compareBy_xValue(const Pixel_d &a, const Pixel_d &b)
 {
     return a.x < b.x;
 }
 bool compareBy_yValue(const Pixel_d &a, const Pixel_d &b)
+{
+    return a.y < b.y;
+}
+*/
+bool compareBy_xValue(const Point_d &a, const Point_d &b)
+{
+    return a.x < b.x;
+}
+bool compareBy_yValue(const Point_d &a, const Point_d &b)
 {
     return a.y < b.y;
 }
@@ -115,7 +127,9 @@ int main(int argc, char** argv )
       std::cout << "Interface created" << '\n';
 
       std::map<std::pair<int, int>, Vec4b> _SampledPixels;
-      std::vector<Pixel_d> _RandPixels;
+      std::vector<Point_d> _RandPixels;
+      std::vector<double>randompixel_coords;
+
 
 
       /* -----------Old Sampler for Single Pixels--------------
@@ -154,11 +168,28 @@ int main(int argc, char** argv )
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
 
       //  _SampledPixels = sampler.create_random_multipix_map();
-      _RandPixels = sampler.calc_rand_d();
-      std::cout<<"returnded rand Pix vec\n";
+      //_RandPixels = sampler.sample_rand_points();
+      randompixel_coords = sampler.sample_rand_coords();
+      std::cout<<"# Returned rand cords\n";
+
+      delaunator::Delaunator d(randompixel_coords);
+      std::cout<<"# Delaunay finished\n";
+      for(std::size_t i = 0; i < d.triangles.size(); i+=3) {
+    printf(
+        "Triangle points: [[%f, %f], [%f, %f], [%f, %f]]\n",
+        d.coords[2 * d.triangles[i]],        //tx0
+        d.coords[2 * d.triangles[i] + 1],    //ty0
+        d.coords[2 * d.triangles[i + 1]],    //tx1
+        d.coords[2 * d.triangles[i + 1] + 1],//ty1
+        d.coords[2 * d.triangles[i + 2]],    //tx2
+        d.coords[2 * d.triangles[i + 2] + 1] //ty2
+    );
+}
+
+
 
       //compute triangle arround all points
-
+/*
       std::sort(_RandPixels.begin(), _RandPixels.end(), compareBy_yValue);
       std::cout<<"Pixelvec sorted by y val\n";
       double ymin = _RandPixels.begin()->y;
@@ -184,13 +215,13 @@ int main(int argc, char** argv )
       std::cout<<"hyp = "<<hyp<<"\n";
 
       double b = sin(60*PI/180)*hyp/sin (90*PI/180);
+
       Point_d P_c;
+      Point_d P_1(P_c.x, P_c.y-hyp);
+      Point_d P_2(P_c.x-b, P_c.y+inner_radius);
+      Point_d P_3(P_c.x+b, P_c.y+inner_radius*1.1);
 
-      //Point_d P_1(P_c.x, P_c.y-hyp);
-      //Point_d P_2(P_c.x-b, P_c.y+inner_radius);
-      //Point_d P_3(P_c.x+b, P_c.y+inner_radius);
-
-
+*/
 
 
       //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
