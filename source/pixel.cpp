@@ -27,7 +27,8 @@ std::ostream& operator<<(std::ostream& os, const Pixel& a)
 Pixel_d::Pixel_d(double a, double b)
   : x(a),
     y(b),
-    color()
+    color(),
+    id()
 {}
 
 void Pixel_d::print(std::ostream& os) const

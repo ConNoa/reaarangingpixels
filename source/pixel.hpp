@@ -30,6 +30,7 @@ public :
   double x;
   double y;
   Vec3d color;
+  long id;
 };
 
 std::ostream& operator<<(std::ostream&, const Pixel_d&);

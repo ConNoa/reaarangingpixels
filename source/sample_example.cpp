@@ -17,6 +17,7 @@
 #include "./point.hpp"
 #include "librarys/delaunator.hpp"
 #include <cstdio>
+#include "sorting/portioner.cpp"
 
 //#include "./collmap.hpp"
 
@@ -168,7 +169,12 @@ int main(int argc, char** argv )
       std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
 
       //  _SampledPixels = sampler.create_random_multipix_map();
-      //_RandPixels = sampler.sample_rand_points();
+      _RandPixels = sampler.sample_rand_points();
+
+      Portioner portionierer(ref_image_img.rows, ref_image_img.cols, _RandPixels);
+
+
+/*
       randompixel_coords = sampler.sample_rand_coords();
       std::cout<<"# Returned rand cords\n";
 
@@ -178,6 +184,7 @@ int main(int argc, char** argv )
     printf(
         "Triangle points: [[%f, %f], [%f, %f], [%f, %f]]\n",
         d.coords[2 * d.triangles[i]],        //tx0
+        d.coords[1 * d.triangles[i]],        //tx0
         d.coords[2 * d.triangles[i] + 1],    //ty0
         d.coords[2 * d.triangles[i + 1]],    //tx1
         d.coords[2 * d.triangles[i + 1] + 1],//ty1
@@ -185,7 +192,7 @@ int main(int argc, char** argv )
         d.coords[2 * d.triangles[i + 2] + 1] //ty2
     );
 }
-
+*/
 
 
       //compute triangle arround all points
