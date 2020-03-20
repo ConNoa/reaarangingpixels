@@ -111,6 +111,7 @@ int main(int argc, char** argv )
     //std::cout<<ref_images[0].second.cols;
     for(std::vector<std::pair<std::string, Mat> >::iterator ref_image = ref_images.begin(); ref_image != ref_images.end(); ++ref_image) //für alle ref IMAGES
     {
+      std::cout << "---------------------------- new file ----------------------------------------- \n";
 
       std::string ref_image_name=(*ref_image).first;
       Mat ref_image_img         =(*ref_image).second;
@@ -124,8 +125,10 @@ int main(int argc, char** argv )
       std::cout << "disp_pix_width = " << disp_pix_width<<'\n';
       std::cout << "disp_pix_height = " << disp_pix_height<<'\n';
       std::vector<std::vector<int> > coll_mat(disp_pix_height, std::vector<int>(disp_pix_width,0));
-      std::cout << "Coll_mat_created" << '\n';
-      std::cout << "Interface created" << '\n';
+      std::cout << "Collisions Matrix created" << '\n';
+      std::cout << "Ammount of Sampled Pixels is = " << fixed_mems_amount<<'\n';
+
+      //std::cout << "Interface created" << '\n';
 
       std::map<std::pair<int, int>, Vec4b> _SampledPixels;
       std::vector<Point_d> _RandPixels;
@@ -166,13 +169,22 @@ int main(int argc, char** argv )
             std::vector<std::pair<std::string,std::vector<Superpixel_3>>> superpixelpattern; //speichert die verschiedenen samples!
             superpixelpattern.push_back(std::pair<std::string,std::vector<Superpixel_3> >("SRand",sampler.random_superpixel()));
                 */
-      std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3   ("<<((fixed_mems_amount*9*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
+                std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3 \n";
+                std::cout<<"this is arround "<<(int)round(((fixed_mems_amount*9*100)/((float)ref_samples)))<<" % of reference image pixels.\n";
+                std::cout<<"this is arround "<<(int)round(((fixed_mems_amount*9*100)/((float)disp_pix_width*disp_pix_height)))<<" % of beamer pixels.\n";
+                std::cout<<"\n";
 
       //  _SampledPixels = sampler.create_random_multipix_map();
       _RandPixels = sampler.sample_rand_points();
+      std::cout<<"#Sampling done!\n";
 
-      Portioner portionierer(ref_image_img.rows, ref_image_img.cols, _RandPixels);
+      std::cout << "\n";
+      std::cout << "portioning pixels \n";
 
+      Portioner portionierer(ref_image_img.cols, ref_image_img.rows, _RandPixels);
+      portionierer.make_Portion();
+      std::cout << "# Portionierung done " <<"\n";
+      std::cout << "\n";
 
 /*
       randompixel_coords = sampler.sample_rand_coords();
@@ -232,7 +244,6 @@ int main(int argc, char** argv )
 
 
       //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
-      std::cout<<"#Sampling done!\n";
 
       //--------------------End of new Sampler --------------------------
       //      Interpreter interpreter(mems_w,mems_h);
@@ -256,7 +267,6 @@ int main(int argc, char** argv )
 
 */
       std::cout<<"#Visualizing done!\n";
-      std::cout<<"Starting with next file......\n";
       std::cout<<"\n";
       std::cout<<"\n";
       std::cout<<"\n";
