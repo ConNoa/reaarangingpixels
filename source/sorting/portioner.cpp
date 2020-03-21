@@ -9,10 +9,13 @@ class Portioner{
     int _X_Bucketsize;
     int _Y_Bucketsize;
     std::vector<Point_d> _random_points;
+    std::vector<std::vector<Point_d>> _point_buckets;
+
 
     Portioner(int width, int height,  std::vector<Point_d> const& random_points);
 
-    std::vector<std::vector<Point_d>> make_Portion();
+    void make_Portion();
+    void fill_Portion();
 
   private:
 };
@@ -24,18 +27,18 @@ class Portioner{
     _X_Bucketsize(150),
     _Y_Bucketsize(100)
     {
-      //std::cout << "_width is now: " <<_width<< "  . " <<"\n";
-      //std::cout << "_height is now: " <<_height<< "  . " <<"\n";
+      std::cout << "_width is now: " <<_width<< "  . " <<"\n";
+      std::cout << "_height is now: " <<_height<< "  . " <<"\n";
 }
 
 
 
-std::vector<std::vector<Point_d>> Portioner::make_Portion()
+void Portioner::make_Portion()
 {
   int bucketcounter = 0;
   int minbucketsize = 99999;
   int maxbucketsize = 0;
-  std::vector<std::vector<Point_d>>Point_bucket;
+//  std::vector<std::vector<Point_d>>Point_bucket;
 
   int ybmin = 0;
   int ybmax = _Y_Bucketsize;
@@ -53,7 +56,6 @@ std::vector<std::vector<Point_d>> Portioner::make_Portion()
       while(xbmax <=_width)
       {
         //std::cout << "inner while loop:    %%%%%%%%%     " <<"\n";
-
         std::vector<Point_d>bucket;
         for(auto it = std::begin(_random_points); it!=std::end(_random_points); ++it){
           if(it->x < xbmax && it->x >= xbmin){
@@ -67,7 +69,7 @@ std::vector<std::vector<Point_d>> Portioner::make_Portion()
         if(minbucketsize > bucket.size())minbucketsize = bucket.size();
         if(maxbucketsize < bucket.size())maxbucketsize = bucket.size();
 
-        Point_bucket.push_back(bucket);
+        _point_buckets.push_back(bucket);
         bucketcounter += 1;
 
         xbmin = xbmin+_X_Bucketsize;
@@ -93,5 +95,10 @@ std::vector<std::vector<Point_d>> Portioner::make_Portion()
     std::cout << "Bucketminsize ist  " << minbucketsize  <<"\n";
 
 
-    return Point_bucket;
+    return _point_buckets;
+}
+
+void Portioner::fill_Portion()
+{
+  
 }

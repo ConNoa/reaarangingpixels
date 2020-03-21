@@ -115,7 +115,7 @@ int main(int argc, char** argv )
 
       std::string ref_image_name=(*ref_image).first;
       Mat ref_image_img         =(*ref_image).second;
-      int const mems_w = 512;
+      int const mems_w = 500;
       int const mems_h = 320;
       int fixed_mems_amount = mems_w*mems_h;
       int const disp_pix_width = 1920;
@@ -180,10 +180,11 @@ int main(int argc, char** argv )
 
       std::cout << "\n";
       std::cout << "portioning pixels \n";
-
+      std::vector<std::vector<Point_d>> portionen;
       Portioner portionierer(ref_image_img.cols, ref_image_img.rows, _RandPixels);
       portionierer.make_Portion();
       std::cout << "# Portionierung done " <<"\n";
+
       std::cout << "\n";
 
 /*
