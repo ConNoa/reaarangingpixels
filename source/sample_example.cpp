@@ -14,10 +14,12 @@
 #include <opencv2/core/matx.hpp>
 #include <algorithm>
 #include <math.h>       /* sin */
-#include "./point.hpp"
+#include "point.hpp"
 #include "librarys/delaunator.hpp"
 #include <cstdio>
 #include "sorting/portioner.cpp"
+#include "mems.cpp"
+//#include "mems.cpp"
 
 //#include "./collmap.hpp"
 
@@ -184,8 +186,12 @@ int main(int argc, char** argv )
       Portioner portionierer(ref_image_img.cols, ref_image_img.rows, _RandPixels);
       portionierer.make_Portion();
       std::cout << "# Portionierung done " <<"\n";
-
       std::cout << "\n";
+
+      Mems mems_device(mems_w, mems_h);
+      mems_device.fill_mems_with_mirrors(ref_image_img.cols, ref_image_img.rows);
+
+
 
 /*
       randompixel_coords = sampler.sample_rand_coords();

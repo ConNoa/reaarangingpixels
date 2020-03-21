@@ -1,10 +1,13 @@
 #include "point.hpp"
 #include <ostream>
 
+
+
 Point_d::Point_d(double a, double b)
   : x(a),
     y(b)
 {}
+
 
 void Point_d::print(std::ostream& os) const
 {

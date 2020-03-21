@@ -17,6 +17,8 @@ public :
   double y;
 };
 
+
+
 std::ostream& operator<<(std::ostream&, const Point_d&);
 
 #endif

@@ -4,13 +4,6 @@
 class Portioner{
 
   public:
-    int _width;
-    int _height;
-    int _X_Bucketsize;
-    int _Y_Bucketsize;
-    std::vector<Point_d> _random_points;
-    std::vector<std::vector<Point_d>> _point_buckets;
-
 
     Portioner(int width, int height,  std::vector<Point_d> const& random_points);
 
@@ -18,6 +11,13 @@ class Portioner{
     void fill_Portion();
 
   private:
+    int _width;
+    int _height;
+    int _X_Bucketsize;
+    int _Y_Bucketsize;
+    std::vector<Point_d> _random_points;
+    std::vector<std::vector<Point_d>> _point_buckets;
+
 };
 
     Portioner::Portioner(int width, int height,  std::vector<Point_d> const& random_points)
@@ -95,10 +95,11 @@ void Portioner::make_Portion()
     std::cout << "Bucketminsize ist  " << minbucketsize  <<"\n";
 
 
-    return _point_buckets;
+    //return _point_buckets;
+    return;
 }
 
 void Portioner::fill_Portion()
 {
-  
+
 }
