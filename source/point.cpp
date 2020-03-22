@@ -3,9 +3,10 @@
 
 
 
-Point_d::Point_d(double a, double b)
+Point_d::Point_d(double a, double b, double distance)
   : x(a),
-    y(b)
+    y(b),
+    dis(distance)
 {}
 
 
