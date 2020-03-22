@@ -124,6 +124,8 @@ int main(int argc, char** argv )
       int const disp_pix_height = 1080;
   //    int const disp_pix_width = ref_image_img.cols-(ref_image_img.cols%mems_w);
   //    int const disp_pix_height = ref_image_img.rows-(ref_image_img.rows%mems_h);
+      std::cout << " width " << ref_image_img.cols<<" height "<<ref_image_img.rows<<'\n';
+
       std::cout << "disp_pix_width = " << disp_pix_width<<'\n';
       std::cout << "disp_pix_height = " << disp_pix_height<<'\n';
       std::vector<std::vector<int> > coll_mat(disp_pix_height, std::vector<int>(disp_pix_width,0));
@@ -171,6 +173,7 @@ int main(int argc, char** argv )
             std::vector<std::pair<std::string,std::vector<Superpixel_3>>> superpixelpattern; //speichert die verschiedenen samples!
             superpixelpattern.push_back(std::pair<std::string,std::vector<Superpixel_3> >("SRand",sampler.random_superpixel()));
                 */
+
                 std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<fixed_mems_amount<<" samples of Multipixel3 \n";
                 std::cout<<"this is arround "<<(int)round(((fixed_mems_amount*9*100)/((float)ref_samples)))<<" % of reference image pixels.\n";
                 std::cout<<"this is arround "<<(int)round(((fixed_mems_amount*9*100)/((float)disp_pix_width*disp_pix_height)))<<" % of beamer pixels.\n";
@@ -190,7 +193,8 @@ int main(int argc, char** argv )
 
       Mems mems_device(mems_w, mems_h);
       mems_device.fill_mems_with_mirrors(ref_image_img.cols, ref_image_img.rows);
-
+//      mems_device.find_samples_next_to_mirror(_RandPixels);
+      mems_device.find_samples_next_to_mirror_fast(portionierer);
 
 
 /*

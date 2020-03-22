@@ -7,8 +7,10 @@ class Portioner{
 
     Portioner(int width, int height,  std::vector<Point_d> const& random_points);
 
+    std::vector<std::vector<Point_d>> _point_buckets;
+
     void make_Portion();
-    void fill_Portion();
+    std::vector<std::vector<Point_d>> get_bucket_cluster(Point_d const& point_in_bucket);
 
   private:
     int _width;
@@ -16,7 +18,6 @@ class Portioner{
     int _X_Bucketsize;
     int _Y_Bucketsize;
     std::vector<Point_d> _random_points;
-    std::vector<std::vector<Point_d>> _point_buckets;
 
 };
 
@@ -99,7 +100,17 @@ void Portioner::make_Portion()
     return;
 }
 
-void Portioner::fill_Portion()
+std::vector<std::vector<Point_d>>Portioner::get_bucket_cluster(Point_d const& point_in_bucket)
 {
+  std::vector<std::vector<Point_d>>point_cluster;
+  double act_x = point_in_bucket.x;
+  double act_y = point_in_bucket.y;
 
+  for(auto it = std::begin(_point_buckets); it != std::end(_point_buckets); ++it){
+    if( (it->begin()->x >= act_x-_X_Bucketsize*2 && it->begin()->x <=act_x+_X_Bucketsize*2)
+      &&(it->begin()->y >= act_y-_Y_Bucketsize*2 && it->begin()->y <=act_y+_Y_Bucketsize*2)){
+        point_cluster.push_back(*it);
+      }
+  }
+  return point_cluster;
 }
