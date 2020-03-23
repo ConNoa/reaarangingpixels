@@ -185,11 +185,13 @@ int main(int argc, char** argv )
 
       std::cout << "\n";
       std::cout << "portioning pixels \n";
-      std::vector<std::vector<Point_d>> portionen;
+    //std::vector<std::vector<Point_d>> portionen;
       Portioner portionierer(ref_image_img.cols, ref_image_img.rows, _RandPixels);
-      portionierer.make_Portion();
+//      portionierer.make_Portion();
+      portionierer.make_Portion_fast();
       std::cout << "# Portionierung done " <<"\n";
       std::cout << "\n";
+
 
       Mems mems_device(mems_w, mems_h);
       mems_device.fill_mems_with_mirrors(ref_image_img.cols, ref_image_img.rows);

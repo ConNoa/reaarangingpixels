@@ -84,7 +84,7 @@ void Mems::find_samples_next_to_mirror(std::vector<Point_d> const& sampled_point
 
 void Mems::find_samples_next_to_mirror_fast(Portioner buckets){
   int minfittingsamples = 999999;
-  int x_y_distance = 15;
+  int x_y_distance = 40;
   int not_matching_mirror_ammount = 0;
 
   //iterate selected_mirror all buckets
@@ -96,8 +96,11 @@ void Mems::find_samples_next_to_mirror_fast(Portioner buckets){
         {
           for(auto point_to_check = std::begin(*cluster_part); point_to_check != std::end(*cluster_part); ++point_to_check)
           {
-            if((selected_mirror->_position.x-point_to_check->x)*(selected_mirror->_position.x-point_to_check->x)+(selected_mirror->_position.y-point_to_check->y)*(selected_mirror->_position.y-point_to_check->y)<=x_y_distance*x_y_distance*2)
+            double sample_dis = pow(selected_mirror->_position.x-point_to_check->x , 2)+pow(selected_mirror->_position.y-point_to_check->y , 2);
+
+            if(sample_dis<=x_y_distance*x_y_distance*2)
             {
+              point_to_check->dis = sample_dis;
               selected_mirror->_matching_samples.push_back(*point_to_check);
             }
           }
@@ -114,16 +117,30 @@ void Mems::find_samples_next_to_mirror_fast(Portioner buckets){
           std::cout << "not matching mirrorammount =  " <<not_matching_mirror_ammount<<"\n";
         }
       }
+      std::cout << "bucket colloumn max = "<< buckets.max_bucket_collumn<< '\n';
   }
 
-bool compare_by_ammount_of_matching_samples(const Mirror &a, const Mirror &b)
-  {
-      return a._matching_samples.size() < b._matching_samples.size();
-  }
+  bool compare_by_ammount_of_matching_samples(const Mirror &a, const Mirror &b)
+    {
+        return a._matching_samples.size() < b._matching_samples.size();
+    }
+  bool compare_by_distance(const Point_d &a, const Point_d &b)
+    {
+        return a.dis < b.dis;
+    }
 
 void Mems::give_every_mirror_a_sample(){
+  //sorting mems for sample availability
   std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_ammount_of_matching_samples);
   std::cout << "Mirror with smallest ammount of samples has  " <<_mems_mirrors.begin()->_matching_samples.size()<<" samples "<<_height<< "  . " <<"\n";
 
+
+  for(auto mirror = std::begin(_mems_mirrors); mirror != std::end(_mems_mirrors); ++mirror){
+    std::sort(mirror->_matching_samples.begin(), mirror->_matching_samples.end(), compare_by_distance);
+      for(auto sample = std::begin(mirror->_matching_samples); sample != std::end(mirror->_matching_samples); ++sample){
+        std::cout << "Sample_dis  " <<sample->dis <<"\n";
+        }
+
+  }
 
 }
