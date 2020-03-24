@@ -2,6 +2,10 @@ MEMS PIXEL
 x     512
 y     320
 
+mems size
+breite ca.	2,4576 cm
+höhe	ca	1,536 cm
+
 
 x*y =  163840     = a
 

@@ -9,7 +9,7 @@ class Portioner{
 
     std::vector<std::vector<Point_d>> _point_buckets;
     std::vector<std::vector<std::vector<Point_d>>> _point_buckets_fast;
-    int max_bucket_collumn;
+  //---DEBUG---- void Mems::find_samples_next_to_mirror_fast----  int max_bucket_collumn;
 
     void make_Portion();
     void make_Portion_fast();
@@ -40,7 +40,7 @@ class Portioner{
       std::vector<std::vector<Point_d>> bucket_vec_y(_height/_Y_Bucketsize);
       std::vector<std::vector<std::vector<Point_d>>> bucket_matrix(_width/_X_Bucketsize, bucket_vec_y);
       _point_buckets_fast = bucket_matrix;
-      max_bucket_collumn = 0;
+      //max_bucket_collumn = 0;
 
 }
 
@@ -133,11 +133,13 @@ std::vector<std::vector<Point_d>>Portioner::get_bucket_cluster(Point_d const& po
 
   long minusvalue = ((int)point_in_bucket.x%_X_Bucketsize);
   int bucket_collumn = (int)(point_in_bucket.x-minusvalue)/_X_Bucketsize;
-  //std::cout<<"bucket column "<< bucket_collumn<<"\n";
+/*
+DEBUG
+  std::cout<<"bucket column "<< bucket_collumn<<"\n";
   if (bucket_collumn > max_bucket_collumn){
     max_bucket_collumn = bucket_collumn;
   }
-
+*/
   minusvalue = (int)point_in_bucket.y%_Y_Bucketsize;
   int bucket_row = (int)(point_in_bucket.y-minusvalue)/_Y_Bucketsize;
 
@@ -156,7 +158,7 @@ std::vector<std::vector<Point_d>>Portioner::get_bucket_cluster(Point_d const& po
   else{
     from_x = bucket_collumn-1;
   }
-  if(bucket_collumn >= _width/_X_Bucketsize-2) {
+  if(bucket_collumn == (_width/_X_Bucketsize-1)) {
     right = true;
     till_x = bucket_collumn;
   }
@@ -170,19 +172,15 @@ std::vector<std::vector<Point_d>>Portioner::get_bucket_cluster(Point_d const& po
   else{
     from_y = bucket_row-1;
   }
-  if(bucket_row >= _height/_Y_Bucketsize-2) {
+  if(bucket_row == (_height/_Y_Bucketsize-1)) {
     bottom = true;
-    till_y = bucket_row-2;
+    till_y = bucket_row;
 
   }
   else{
     till_y = bucket_row+1;
   }
-
-
-
   //if point is in a bucket which is not on border of buckets
-
   if(top==false && bottom==false && left==false && right==false){
       for(int i = bucket_collumn-1; i<=bucket_collumn+1; i++){
         for(int j = bucket_row-1; j<= bucket_row+1; j++){
@@ -193,12 +191,10 @@ std::vector<std::vector<Point_d>>Portioner::get_bucket_cluster(Point_d const& po
 
   else{ for(int i = from_x; i<=till_x; i++){
           for(int j = from_y; j<= till_y; j++){
-        //    point_cluster.push_back(_point_buckets_fast[i][j]);
+            point_cluster.push_back(_point_buckets_fast[i][j]);
           }
         }
       }
-
-
 
   return point_cluster;
 }
