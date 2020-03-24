@@ -20,7 +20,7 @@ class Mems{
 //    bool compare_by_ammount_of_matching_samples(const Mirror &a, const Mirror &b);
     std::vector<Mirror> get_mirror_cluster(Point_d const& displayed_sample) ;
 
-    void give_every_mirror_a_sample(Portioner const& buckets);
+    void give_every_mirror_a_sample();
 
 
   private:
@@ -156,30 +156,30 @@ bool compare_by_distance(const Point_d &a, const Point_d &b)
         return a.dis < b.dis;
     }
 
-std::vector<Mirror> get_mirror_cluster(Point_d const& displayed_sample){
-  
+std::vector<Mirror> Mems::get_mirror_cluster(Point_d const& displayed_sample){
+
   std::vector<Mirror> m_cluster;
-  for(auto it = std::begin(_mems_mirrors); it != std:end(_mems_mirrors); it++)
+  for(auto it = std::begin(this->_mems_mirrors); it != std::end(this->_mems_mirrors); it++)
     {
-      double dis_x = displayed_sample.x - it->position.x;
-      double dis_y = displayed_sample.y - it->position.y;
+      double dis_x = displayed_sample.x - it->_position.x;
+      double dis_y = displayed_sample.y - it->_position.y;
       double sample_dis = pow(dis_x , 2)+pow(dis_y , 2);
               if(sample_dis<=max_sample_dis)
                 {
                   m_cluster.push_back(*it);
                 }
     }
-    std::cout<<"created mirrorcluster for mirror"<< it-> id<<"\n";
+    std::cout<<"created mirrorcluster for mirror"<< "\n";
     return m_cluster;
   }
 
-void Mems::give_every_mirror_a_sample(Port const& buckets){
+void Mems::give_every_mirror_a_sample(){
 
   while(_mems_mirrors.size() > 0)
   {
     //sorting mems for sample availability
     std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_ammount_of_matching_samples);
-    std::cout << "Mirror with smallest ammount of samples has  " <<_mems_mirrors.begin()->_matching_samples.size()<<" samples. " <<"\n"
+    std::cout << "Mirror with smallest ammount of samples has  " <<_mems_mirrors.begin()->_matching_samples.size()<<" samples. " <<"\n";
     //gehe durch alle spiegel und sortiere ihren sample vector der größe nach
     for(auto mirror = std::begin(_mems_mirrors); mirror != std::end(_mems_mirrors); ++mirror){
       std::sort(mirror->_matching_samples.begin(), mirror->_matching_samples.end(), compare_by_distance);
@@ -193,22 +193,29 @@ void Mems::give_every_mirror_a_sample(Port const& buckets){
 
     //point aus allen umliegenden mirrors als available point löschen
     //
-    std::vector<Mirror> mirrors_to_proof = get_mirror_cluster(Point_d) ;
+    std::vector<Mirror> mirrors_to_proof = get_mirror_cluster(_mems_mirrors.begin()->_displayed_sample) ;
     //-dafür mirror cluster aus umliegenden buckets durchiterieren und point  aus _matching_samples wenn existent löschen
-    //
-    //- update size() of manipulated vector;
-    std::vector<std::vector<Point_d>> sampled_bucket_cluster = buckets.get_bucket_cluster(_mems_mirrors.begin()->_displayed_sample);
-    for(auto bucket = std::begin(sampled_bucket_cluster); bucket!=std::end(sampled_bucket_cluster); bucket++){
-      for(auto point_in_b = std::begin(*bucket); point_in_b != std::end(*bucket) point_in_b++){
 
-        if(point_in_b-> == )
+    for(auto it = std::begin(mirrors_to_proof); it != std::end(mirrors_to_proof); ++it){
+        for(auto sample = std::begin(it->_matching_samples); sample != std::end(it->_matching_samples); ++sample){
+          if(_mems_mirrors.begin()->_displayed_sample.x == sample->x && _mems_mirrors.begin()->_displayed_sample.y == sample->y){
+            //mirror has sample!!!
+            _mems_mirrors.begin()->_matching_samples.erase(sample);
+
+            //sample erased
+
+          }
+        }
+
       }
+      //
+      //- update size() of manipulated vector;
 
     }
 
     _mems_mirrors.begin()->_matching_samples.clear();
-    _mems_mirrors_randomrasterized.push_back(_mems_mirrors.begin());
-    _mems_mirrors.begin() = _mems_mirrors.back();
+    _mems_mirrors_randomrasterized.push_back(*_mems_mirrors.begin());
+    _mems_mirrors.front() = _mems_mirrors.back();
     _mems_mirrors.pop_back();
 
 
