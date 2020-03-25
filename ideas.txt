@@ -22,3 +22,9 @@ b/a =   12.65625
 
 
 superpixel_3  for the moment best result
+
+
+todo!!!
+--->
+anzahl der samples für mirror auf maximum beschränken, nicht mehr als 15 nötig
+bei geringster nähe anfangen!
