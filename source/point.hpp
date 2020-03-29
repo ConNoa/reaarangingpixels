@@ -16,6 +16,7 @@ public :
   double x;
   double y;
   double dis;
+  int id;
 };
 
 

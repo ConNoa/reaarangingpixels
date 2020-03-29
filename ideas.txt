@@ -28,3 +28,10 @@ todo!!!
 --->
 anzahl der samples für mirror auf maximum beschränken, nicht mehr als 15 nötig
 bei geringster nähe anfangen!
+
+
+- beim bucketclustern den bucket mit pointposition an erste stelle im vector hinzufügen
+- dann wird er beim samplesfinden als erstes durchsucht
+-
+- Erweiterung:
+  die Buckets anhand ihrer Entfernung zur pointposition in den container pushen

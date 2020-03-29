@@ -9,6 +9,13 @@ Point_d::Point_d(double a, double b, double distance)
     dis(distance)
 {}
 
+Point_d::Point_d(double a, double b, double distance, int ID)
+  : x(a),
+    y(b),
+    dis(distance),
+    id(ID)
+{}
+
 
 void Point_d::print(std::ostream& os) const
 {
