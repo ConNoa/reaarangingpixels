@@ -195,10 +195,13 @@ int main(int argc, char** argv )
 
       Mems mems_device(mems_w, mems_h);
       mems_device.fill_mems_with_mirrors(ref_image_img.cols, ref_image_img.rows);
-//      mems_device.find_samples_next_to_mirror(_RandPixels);
-      mems_device.find_samples_next_to_mirror_fast(portionierer);
-      mems_device.save_mirrors_with_samples();
-      mems_device.give_every_mirror_a_sample();
+
+//      mems_device.find_samples_next_to_mirror_fast(portionierer);
+
+//      mems_device.save_mirrors_with_samples();
+      mems_device.read_mirrors_with_samples();
+
+      mems_device.give_every_mirror_a_sample_slow();
 
 
 /*

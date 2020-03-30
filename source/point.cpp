@@ -3,11 +3,6 @@
 
 
 
-Point_d::Point_d(double a, double b, double distance)
-  : x(a),
-    y(b),
-    dis(distance)
-{}
 
 Point_d::Point_d(double a, double b, double distance, int ID)
   : x(a),
