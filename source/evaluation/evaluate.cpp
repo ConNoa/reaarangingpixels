@@ -97,6 +97,7 @@ public:
    	temp3 = cvCreateImage( size, d, nChan);
 
    	ssim_map = cvCreateImage( size, d, nChan);
+    */
    	// *************************** END INITS **********************************
 
 

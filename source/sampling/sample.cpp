@@ -416,7 +416,7 @@ public:
         std::cout<<"all pixels sampled \n";
       //  return output_pattern;*/
       }
-
+/*
   std::map<std::pair<int, int>, Vec4b> create_random_multipix_map(){
     //compute multipix size
     int multipixsize = compute_multipix_size();
@@ -464,20 +464,13 @@ public:
                 _SampleMap_xy[pos_act] = found_value;
                 std::cout<< "changed value"<<"\n";
                 std::cout<< "in the found_value: "<< found_value[0]<< "in the found_value: "<< found_value[1]<< "in the found_value: "<< found_value[2]<< "in the found_value: "<< found_value[3]<<"\n";
-
-
             // found
           }
-
-
-
-}
-}
-}
-
-
-
+      }
     }
+  }
+}
+*/
 
     //for i< ammount
       //get random pos xy

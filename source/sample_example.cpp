@@ -196,12 +196,25 @@ int main(int argc, char** argv )
       Mems mems_device(mems_w, mems_h);
       mems_device.fill_mems_with_mirrors(ref_image_img.cols, ref_image_img.rows);
 
-//      mems_device.find_samples_next_to_mirror_fast(portionierer);
+      mems_device.find_samples_next_to_mirror_fast(portionierer);
 
-//      mems_device.save_mirrors_with_samples();
-      mems_device.read_mirrors_with_samples();
+      std::string dataname = "test2.dat";
 
+    //  mems_device.save_mirrors_with_samples(dataname);
+
+      std::string input = "test2.dat";
+
+      mems_device.read_mirrors_with_samples(input);
+  //    mems_device.print_informations();
       mems_device.give_every_mirror_a_sample_slow();
+      std::string input2 = "test3.dat";
+
+      mems_device.save_mirrors_with_samples_2(input2);
+
+  //    mems_device.print_informations();
+      std::cout << "# Mirrrorsampling done " <<"\n";
+
+      exit(1);
 
 
 /*
@@ -284,7 +297,7 @@ int main(int argc, char** argv )
       }
 
 */
-      std::cout<<"#Visualizing done!\n";
+      //std::cout<<"#Visualizing done!\n";
       std::cout<<"\n";
       std::cout<<"\n";
       std::cout<<"\n";

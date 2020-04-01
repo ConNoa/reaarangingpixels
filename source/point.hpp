@@ -10,7 +10,7 @@ class Point_d
 {
 public :
 
-Point_d (double = 0, double = 0, double = 99999, int = 9999999);
+Point_d (double = 999999, double = 99999, double = 99999, int = 9999999);
   void print(std::ostream&) const;
 
   double x;
