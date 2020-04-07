@@ -140,29 +140,6 @@ int main(int argc, char** argv )
 
 
 
-      /* -----------Old Sampler for Single Pixels--------------
-            //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
-            Sampler sampler(sample_amount, ref_image_img); // Hier wird ein sampler erstellt!
-
-            std::cout<<"\n\n#Sampling reference image ("+ref_image_name+") with "<<sample_amount<<" samples ("<<((sample_amount*100)/((float)ref_samples))<<" percent of reference image pixels).\n";
-            std::vector<std::pair<std::string,std::vector<Pixel_d> > > patterns; //speichert die verschiedenen samples!
-            //0:GRID
-            //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Grid",sampler.calc_grid()));
-            //1:HEXA
-            //patterns.push_back(sampler.calc_rand_d());
-            //2:RAND
-            patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d()));
-            //  patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Rand",sampler.calc_rand_d_compressed()));
-
-            //4:HALT
-            //patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton_compressed()));
-            patterns.push_back(std::pair<std::string,std::vector<Pixel_d> >("Halt",sampler.calc_halton()));
-
-      		  //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
-      		  std::cout<<"#Sampling done!\n";
-      -------------------------------------------------------------*/
-
-
       //-----------New Sampler for Superpixel_3/MultiPix Pixels--------------
       //    Sampler sampler(fixed_mems_amount,ref_image_img, mems_w, mems_h); // Hier wird ein sampler erstellt!
       //          Sampler sampler(fixed_mems_amount, ref_image_img, alloutput, collisionmap); // Hier wird ein sampler erstellt!
@@ -215,83 +192,46 @@ int main(int argc, char** argv )
 
       mems_device.compare_by_id();
 
+  //    mems_device.print_informations();
+
+      for(auto it = std::begin(mems_device._mems_mirrors); it!= std::end(mems_device._mems_mirrors);++it){
+        it->_position.x = (it->_position.x-3)/6;
+        it->_position.y = (it->_position.y-3)/6;
+
+      }
       mems_device.print_informations();
 
-    //  for()
 
-      exit(1);
-
-
-/*
-      randompixel_coords = sampler.sample_rand_coords();
-      std::cout<<"# Returned rand cords\n";
-
-      delaunator::Delaunator d(randompixel_coords);
-      std::cout<<"# Delaunay finished\n";
-      for(std::size_t i = 0; i < d.triangles.size(); i+=3) {
-    printf(
-        "Triangle points: [[%f, %f], [%f, %f], [%f, %f]]\n",
-        d.coords[2 * d.triangles[i]],        //tx0
-        d.coords[1 * d.triangles[i]],        //tx0
-        d.coords[2 * d.triangles[i] + 1],    //ty0
-        d.coords[2 * d.triangles[i + 1]],    //tx1
-        d.coords[2 * d.triangles[i + 1] + 1],//ty1
-        d.coords[2 * d.triangles[i + 2]],    //tx2
-        d.coords[2 * d.triangles[i + 2] + 1] //ty2
-    );
-}
-*/
-
-
-      //compute triangle arround all points
-/*
-      std::sort(_RandPixels.begin(), _RandPixels.end(), compareBy_yValue);
-      std::cout<<"Pixelvec sorted by y val\n";
-      double ymin = _RandPixels.begin()->y;
-      std::cout<<"ymin = "<<ymin<<"\n";
-      double ymax = _RandPixels.back().y;
-      double ycenter = (ymax-ymin)/2;
-
-      std::cout<<"ymax = "<<ymax<<"\n";
-
-      std::sort(_RandPixels.begin(), _RandPixels.end(), compareBy_xValue);
-      std::cout<<"Pixelvec sorted by x val\n";
-      double xmin = _RandPixels.begin()->x;
-      std::cout<<"xmin = "<<xmin<<"\n";
-      double xmax = _RandPixels.back().x;
-      std::cout<<"xmax = "<<xmax<<"\n";
-      double xcenter = (xmax-xmin)/2;
-      //1.05 for a bit bigger triangle
-
-      double inner_radius = 1.05*sqrt(pow(ycenter, 2)+ pow(xcenter,2));
-      std::cout<<"ir = "<<inner_radius<<"\n";
-
-      double hyp= sin(90*PI/180)*inner_radius/sin (30*PI/180);
-      std::cout<<"hyp = "<<hyp<<"\n";
-
-      double b = sin(60*PI/180)*hyp/sin (90*PI/180);
-
-      Point_d P_c;
-      Point_d P_1(P_c.x, P_c.y-hyp);
-      Point_d P_2(P_c.x-b, P_c.y+inner_radius);
-      Point_d P_3(P_c.x+b, P_c.y+inner_radius*1.1);
-
-*/
-
+    //  exit(1);
 
       //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
 
       //--------------------End of new Sampler --------------------------
-      //      Interpreter interpreter(mems_w,mems_h);
+      //Interpreter interpreter(mems_w,mems_h);
       //      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
 
+      Mat output(mems_h, mems_w, CV_64FC4, Scalar(0,0,0,0));
 
+      for(auto it = std::begin(mems_device._mems_mirrors); it != std::end(mems_device._mems_mirrors); ++it){
+        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
+        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[1]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[1];
+        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[2]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[2];
+        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[3]= 255;
+      }
 
+    /*  for(std::vector<Pixel_d>::iterator i = _Pattern.begin(); i != _Pattern.end(); ++i) {
+          output.at<Vec3d>(Point((*i).x,(*i).y))[0]=(*i).color[0];
+          output.at<Vec3d>(Point((*i).x,(*i).y))[1]=(*i).color[1];
+          output.at<Vec3d>(Point((*i).x,(*i).y))[2]=(*i).color[2];
+        }
 
+*/
       /*-----------------Old Interpreter, imwrite---------------------*/
-      /*
+
+/*
       Mat output;
       Mat eval_out;
+
       for(std::vector<std::pair<std::string,std::vector<Superpixel_3> > >::iterator pattern= superpixelpattern.begin(); pattern != superpixelpattern.end(); ++pattern)
       {
         std::cout<<"Interpreting pixel";
@@ -302,7 +242,10 @@ int main(int argc, char** argv )
       }
 
 */
-      //std::cout<<"#Visualizing done!\n";
+      std::string name="basic_samples"+std::to_string(sample_amount)+ref_image_name;
+      imwrite("result_"+name+".png",output);
+
+      std::cout<<"#Visualizing done!\n";
       std::cout<<"\n";
       std::cout<<"\n";
       std::cout<<"\n";

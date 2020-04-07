@@ -10,5 +10,8 @@ class Mirror{
     Point_d _displayed_sample;
     bool has_sample = false;
 
+    int _am_disp_pixels;
+    std::vector<Pixel_d> _disp_pixels;
+
 
 };

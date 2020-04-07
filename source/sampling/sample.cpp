@@ -33,6 +33,8 @@ public:
       }
       //      std::cout<<"-----------------cols  "<<_Image.cols<<"  -----rows  "<<_Image.rows<<"\n";
 
+
+
   std::vector<Pixel_d>  calc_grid(){
     std::cout<<"sampling grid\n";
 
@@ -118,7 +120,7 @@ public:
   }
 
 
-    std::vector<Point_d> sample_rand_points(){
+  std::vector<Point_d> sample_rand_points(){
       std::cout<<"sampling random points\n";
       std::vector<Point_d> output_pattern;
 
@@ -148,7 +150,7 @@ public:
 
     }
 
-      std::vector<double> sample_rand_coords(){
+  std::vector<double> sample_rand_coords(){
         std::cout<<"sampling random points\n";
         std::vector<double> output_pattern;
 
