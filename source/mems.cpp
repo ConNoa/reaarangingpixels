@@ -27,6 +27,7 @@ class Mems{
     void save_mirrors_with_samples(std::string input);
     void save_mirrors_with_samples_2(std::string input);
     void read_mirrors_with_samples(std::string input);
+    void read_mirrors_with_samples_2(std::string input);
 //    bool compare_by_ammount_of_matching_samples(const Mirror &a, const Mirror &b);
     std::vector<Mirror> get_mirror_cluster(Point_d const& displayed_sample) ;
 
@@ -71,7 +72,7 @@ class Mems{
       }
 
 void Mems::compare_by_id(){
-  std::sort(_mems_mirrors_randomrasterized.begin(), _mems_mirrors_randomrasterized.end(), compare_by_idi);
+  std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_idi);
 }
 
 void Mems::print_informations(){
@@ -85,10 +86,13 @@ void Mems::print_informations(){
   for( auto it = std::begin(_mems_mirrors); it!= std::end(_mems_mirrors); ++it){
     std::cout <<"mirror id: " << it->id <<'\n';
     std::cout <<"mirror pos: x " << it->_position.x<<" ,   y " << it->_position.y<<'\n';
-    std::cout <<"displayed_sample pos: x " << it->_displayed_sample.x<<" ,   y " << it->_displayed_sample.y<<'\n';
-    std::cout <<"mirror amount of matching samples " << it->_ammount_of_matching_samples<<'\n';
+    std::cout <<"displayed_sample pos: x " << it->_displayed_sample.x<<" ,   y " << it->_displayed_sample.y<<" ,   dist: " << it->_displayed_sample.dis<<'\n';
+//    std::cout <<"mirror amount of matching samples " << it->_ammount_of_matching_samples<<'\n';
     std::cout <<'\n';
+    for(auto samp = std::begin(it->_matching_samples); samp != std::begin(it->_matching_samples); ++samp){
+      std::cout <<" x " << samp->x<<" ,   y " << samp->y<<'\n';
 
+    }
   }
 
 }
@@ -264,14 +268,13 @@ void Mems::save_mirrors_with_samples(std::string input){
 void Mems::save_mirrors_with_samples_2(std::string input){
     std::fstream f;
     f.open(input, std::ios::out);
-    f << "mirrors with samples" << "\n"<< "\n"<< "\n";
-    for(auto mi = _mems_mirrors_randomrasterized.begin(); mi!= _mems_mirrors.end(); ++mi){
+    for(auto mi = _mems_mirrors_randomrasterized.begin(); mi!= _mems_mirrors_randomrasterized.end(); ++mi){
         f << "id " << mi->id<< ";\n";
-        f << "pos " << mi->_position.x<< " , "<< mi->_position.y<< " , "<< mi->_position.dis<< ";\n";
-        f << "dis_sample " << mi->_displayed_sample.x<< " , "<< mi->_displayed_sample.y<< " , "<< mi->_displayed_sample.dis<< ";\n";
+        f << "pos " << mi->_position.x<< " "<< mi->_position.y<< " "<< mi->_position.dis<< ";\n";
+        f << "dis_sample " << mi->_displayed_sample.x<< " "<< mi->_displayed_sample.y<< " "<< mi->_displayed_sample.dis<< ";\n";
         f << "sample_ammount " << mi->_ammount_of_matching_samples<< ";\n";
         for(auto sam = mi->_matching_samples.begin(); sam!=mi->_matching_samples.end(); ++sam){
-          f << "pos " <<sam->x<< " , "<< sam->y<< " , "<< sam->dis<< ";\n";
+          f << "pos " <<sam->x<< " "<< sam->y<< " "<< sam->dis<< ";\n";
         }
         f << "--- " << ";\n";
       }
@@ -288,6 +291,17 @@ void Mems::read_mirrors_with_samples(std::string input){
 
 
   }
+
+  void Mems::read_mirrors_with_samples_2(std::string input){
+
+    RPF_reader new_input;
+    _mems_mirrors.clear();
+    _mems_mirrors = new_input.load_rpf_2(input);
+
+    std::cout<< "read files from : "<< input<< ".---------------------------------"<<"\n";
+
+
+    }
 
 std::vector<Mirror> Mems::get_mirror_cluster(Point_d const& displayed_sample){
 
@@ -383,7 +397,7 @@ void Mems::give_every_mirror_a_sample_slow(){
       std::cout<<"give every mirror a sample"<< "\n"<< "\n";
       std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_ammount_of_matching_samples);
 
-      while(_mems_mirrors_randomrasterized.size() < 1000)
+      while(_mems_mirrors_randomrasterized.size() < _mems_mirrors.size())
       {
   //      std::cout<<"Pixels left: "<<_mems_mirrors.size()<<"\n";
         //sorting mems for sample availability
