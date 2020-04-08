@@ -12,12 +12,15 @@ class Mems{
     Mems(int width, int height);
 
     std::vector<Mirror> _mems_mirrors;
+    std::vector<Mirror> _mems_mirrors_multi;
     std::vector<Mirror> _mems_mirrors_randomrasterized;
     int _width;
     int _height;
     double max_sample_dis;
 
     void compare_by_id();
+
+    void create_multipix();
 
     void print_informations();
 
@@ -75,6 +78,27 @@ void Mems::compare_by_id(){
   std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_idi);
 }
 
+void Mems::create_multipix(){
+  int counter = 0;
+  for(auto it = std::begin(_mems_mirrors); it!= std::end(_mems_mirrors); ++it){
+    Mirror actual_mirror;
+    for(int i = 0; i < 3; ++i){
+      for(int j = 0; j <3; ++j){
+
+        actual_mirror.id = counter;
+        actual_mirror._position.x = it->_position.x+i;
+        actual_mirror._position.y = it->_position.y+j;
+        actual_mirror._displayed_sample.x = it->_displayed_sample.x+i;
+        actual_mirror._displayed_sample.y = it->_displayed_sample.y+j;
+        _mems_mirrors_multi.push_back(actual_mirror);
+        counter++;
+
+      }
+    }
+  }
+}
+
+
 void Mems::print_informations(){
   std::cout << "" << '\n';
   std::cout << "MEMS-Informations" << '\n';
@@ -83,7 +107,7 @@ void Mems::print_informations(){
   std::cout << "_mems_mirrors_randomrasterized.size() = "<< _mems_mirrors_randomrasterized.size() << '\n';
   std::cout << "" << '\n';
   std::cout << "_mems_mirrors content: " << '\n';
-  for( auto it = std::begin(_mems_mirrors); it!= std::end(_mems_mirrors); ++it){
+  for( auto it = std::begin(_mems_mirrors_multi); it!= std::end(_mems_mirrors_multi); ++it){
     std::cout <<"mirror id: " << it->id <<'\n';
     std::cout <<"mirror pos: x " << it->_position.x<<" ,   y " << it->_position.y<<'\n';
     std::cout <<"displayed_sample pos: x " << it->_displayed_sample.x<<" ,   y " << it->_displayed_sample.y<<" ,   dist: " << it->_displayed_sample.dis<<'\n';

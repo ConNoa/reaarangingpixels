@@ -195,11 +195,16 @@ int main(int argc, char** argv )
   //    mems_device.print_informations();
 
       for(auto it = std::begin(mems_device._mems_mirrors); it!= std::end(mems_device._mems_mirrors);++it){
-        it->_position.x = (it->_position.x-3)/6;
-        it->_position.y = (it->_position.y-3)/6;
+        it->_position.x = (it->_position.x-3)/2;
+        it->_position.y = (it->_position.y-3)/2;
 
       }
-      mems_device.print_informations();
+
+      mems_device.create_multipix();
+
+
+
+      //mems_device.print_informations();
 
 
     //  exit(1);
@@ -210,15 +215,33 @@ int main(int argc, char** argv )
       //Interpreter interpreter(mems_w,mems_h);
       //      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
 
-      Mat output(mems_h, mems_w, CV_64FC4, Scalar(0,0,0,0));
+      Mat output(mems_h*3, mems_w*3, CV_64FC4, Scalar(0,0,0,255));
 
-      for(auto it = std::begin(mems_device._mems_mirrors); it != std::end(mems_device._mems_mirrors); ++it){
+      for(auto it = std::begin(mems_device._mems_mirrors_multi); it != std::end(mems_device._mems_mirrors_multi); ++it){
         output.at<Vec4d>(Point(it->_position.x,it->_position.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
         output.at<Vec4d>(Point(it->_position.x,it->_position.y))[1]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[1];
         output.at<Vec4d>(Point(it->_position.x,it->_position.y))[2]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[2];
-        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[3]= 255;
+        if((int)it->_position.x % 3 == 0||(int)it->_position.x % 3 == 2||(int)it->_position.y % 3 == 0||(int)it->_position.y % 3 == 2){
+          output.at<Vec4d>(Point(it->_position.x,it->_position.y))[3]= 122;
+
+        }
       }
 
+
+
+      Mat output2(2000, 3000, CV_64FC4, Scalar(0,0,0,0));
+
+      for(auto it = std::begin(mems_device._mems_mirrors_multi); it != std::end(mems_device._mems_mirrors_multi); ++it){
+        output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
+        output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[1]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[1];
+        output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[2]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[2];
+        if((int)it->_position.x % 3 == 0||(int)it->_position.x % 3 == 2||(int)it->_position.y % 3 == 0||(int)it->_position.y % 3 == 2){
+        output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[3]= output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[3] + 100;
+        }
+        else{
+          output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[3]= 255;
+        }
+      }
     /*  for(std::vector<Pixel_d>::iterator i = _Pattern.begin(); i != _Pattern.end(); ++i) {
           output.at<Vec3d>(Point((*i).x,(*i).y))[0]=(*i).color[0];
           output.at<Vec3d>(Point((*i).x,(*i).y))[1]=(*i).color[1];
@@ -243,7 +266,8 @@ int main(int argc, char** argv )
 
 */
       std::string name="basic_samples"+std::to_string(sample_amount)+ref_image_name;
-      imwrite("result_"+name+".png",output);
+      imwrite("result_1"+name+".png",output);
+      imwrite("result_2"+name+".png",output2);
 
       std::cout<<"#Visualizing done!\n";
       std::cout<<"\n";
