@@ -18,7 +18,9 @@ class Mems{
     int _height;
     double max_sample_dis;
 
+
     void compare_by_id();
+    void compare_by_x_m();
 
     void create_multipix();
 
@@ -29,6 +31,7 @@ class Mems{
     void find_samples_next_to_mirror_fast(Portioner buckets);
     void save_mirrors_with_samples(std::string input);
     void save_mirrors_with_samples_2(std::string input);
+    void write_rpf(std::string const& name_of_rpf);
     void read_mirrors_with_samples(std::string input);
     void read_mirrors_with_samples_2(std::string input);
 //    bool compare_by_ammount_of_matching_samples(const Mirror &a, const Mirror &b);
@@ -64,6 +67,11 @@ class Mems{
       //return a._ammount_of_matching_samples < b._ammount_of_matching_samples;
       }
 
+  bool compare_by_x(const Mirror &a, const Mirror &b){
+      return a._position.x > b._position.x;
+      //return a._ammount_of_matching_samples < b._ammount_of_matching_samples;
+      }
+
 
   bool compare_by_ammount(const Mirror &a, const Mirror &b){
       //return a._matching_samples.size() < b._matching_samples.size();
@@ -74,11 +82,21 @@ class Mems{
           return a.dis < b.dis;
       }
 
+  bool right_point(Mirror* point, int ix, int iy) {
+        return (point->_position.x == ix && point->_position.y == iy);
+    }
+
 void Mems::compare_by_id(){
+  std::cout << "compare by id" << '\n';
   std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_idi);
 }
 
+void Mems::compare_by_x_m(){
+  std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_x);
+}
+
 void Mems::create_multipix(){
+  std::cout << " create multipix"<<"\n";
   int counter = 0;
   for(auto it = std::begin(_mems_mirrors); it!= std::end(_mems_mirrors); ++it){
     Mirror actual_mirror;
@@ -305,6 +323,55 @@ void Mems::save_mirrors_with_samples_2(std::string input){
       f.close();
     }
 
+
+void Mems::write_rpf(std::string const& name_of_rpf){
+  std::cout<< "write rpf methode"<<"\n";
+  std::cout<< _height<<"\n";
+//    compare_by_x_m();
+    int x_counter = 0;
+
+    int y_counter = 0;
+
+    std::fstream f;
+
+    f.open(name_of_rpf, std::ios::out);
+
+    f << "name of picture" << " " << "original-picture_width"  << " " << "original-picture_height"  << " "  << " has color depth of 32bit for r+b+g+alpha (4* 8bit)" <<"\n";
+    f << "RPF has"  << " "  << "Samples of original picture"  << " "  << "Multipixels have size of " << " " <<"\n";
+
+    while(y_counter < 2000){
+      _mems_mirrors.clear();
+
+      auto mir_it = _mems_mirrors_multi.begin();
+
+      while(mir_it != _mems_mirrors_multi.end()){
+
+        if(int(mir_it->_position.y) == y_counter){
+
+          _mems_mirrors.push_back(*mir_it);
+
+          mir_it = _mems_mirrors_multi.erase(mir_it);
+          std::cout<<_mems_mirrors_multi.size()<<" is size of _mems_mirrors_multi"<<"\n";
+        }
+        else ++mir_it;
+      }
+      compare_by_x_m();
+      while (_mems_mirrors.size() > 0  ){
+        std::cout<<" Px "<<_mems_mirrors.back()._position.x<<" Py "<<_mems_mirrors.back()._position.y<<" Ox "<<_mems_mirrors.back()._displayed_sample.x<<" Oy "<<_mems_mirrors.back()._displayed_sample.y<<"\n";
+
+        f <<" Px "<<_mems_mirrors.back()._position.x<<" Py "<<_mems_mirrors.back()._position.y<<" Ox "<<_mems_mirrors.back()._displayed_sample.x<<" Oy "<<_mems_mirrors.back()._displayed_sample.y<<"\n";
+        _mems_mirrors.pop_back();
+      }
+      f << "--- " << ";\n";
+
+      ++y_counter;
+    }
+    f << "--- " << "\n";
+    f.close();
+    return;
+  }
+
+
 void Mems::read_mirrors_with_samples(std::string input){
 
   RPF_reader new_input;
@@ -316,7 +383,7 @@ void Mems::read_mirrors_with_samples(std::string input){
 
   }
 
-  void Mems::read_mirrors_with_samples_2(std::string input){
+void Mems::read_mirrors_with_samples_2(std::string input){
 
     RPF_reader new_input;
     _mems_mirrors.clear();

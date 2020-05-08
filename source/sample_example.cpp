@@ -72,6 +72,21 @@ bool compareBy_yValue(const Point_d &a, const Point_d &b)
     return a.y < b.y;
 }
 
+/*
+void rpf(std::string const& name_of_rpf, Mat const& output){
+    std::fstream f;
+    f.open(name_of_rpf, std::ios::out);
+    f << "name of picture" << " " << "original-picture_width"  << " " << "original-picture_height"  << " "  << " has color depth of 32bit for r+b+g+alpha (4* 8bit)" <<"\n";
+    f << "RPF has"  << " "  << "Samples of original picture"  << " "  << "Multipixels have size of " << " " <<"\n";
+    for(auto it = output.begin(); it != output.end(); ++it){
+      std::cout<<" Px "<<_mems_mirrors.back()._position.x<<" Py "<<_mems_mirrors.back()._position.y<<" Ox "<<_mems_mirrors.back()._displayed_sample.x<<" Oy "<<_mems_mirrors.back()._displayed_sample.y<<"\n";
+      f <<" Px "<<_mems_mirrors.back()._position.x<<" Py "<<_mems_mirrors.back()._position.y<<" Ox "<<_mems_mirrors.back()._displayed_sample.x<<" Oy "<<_mems_mirrors.back()._displayed_sample.y<<"\n";
+    }
+    f << "--- " << "\n";
+    f.close();
+    return;
+  }
+*/
 
 int main(int argc, char** argv )
 {
@@ -177,19 +192,13 @@ int main(int argc, char** argv )
 
       std::string dataname = "mirrorswithsamples.dat";
       std::string input2 = "mirrorswithsamples_weiterverarbeitet.dat";
-
-
-//      mems_device.save_mirrors_with_samples(dataname);
-
-//      mems_device.read_mirrors_with_samples(dataname);
-//      mems_device.print_informations();
-//      mems_device.give_every_mirror_a_sample_slow();
-//      mems_device.save_mirrors_with_samples_2(input2);
-
+      //      mems_device.save_mirrors_with_samples(dataname);
+      //      mems_device.read_mirrors_with_samples(dataname);
+      //      mems_device.print_informations();
+      //      mems_device.give_every_mirror_a_sample_slow();
+      //      mems_device.save_mirrors_with_samples_2(input2);
       std::cout << "# Mirrrorsampling done " <<"\n";
-
       mems_device.read_mirrors_with_samples_2(input2);
-
       mems_device.compare_by_id();
 
   //    mems_device.print_informations();
@@ -197,36 +206,87 @@ int main(int argc, char** argv )
       for(auto it = std::begin(mems_device._mems_mirrors); it!= std::end(mems_device._mems_mirrors);++it){
         it->_position.x = (it->_position.x-3)/2;
         it->_position.y = (it->_position.y-3)/2;
-
       }
 
       mems_device.create_multipix();
+      std::string rpf_name = "file1.rpf";
 
-
-
+      //mems_device.write_rpf(rpf_name);
       //mems_device.print_informations();
-
-
-    //  exit(1);
-
+      //  exit(1);
       //die verschiedenen verteilungen sind nun im vektor namens pattern verfügbar!
 
       //--------------------End of new Sampler --------------------------
       //Interpreter interpreter(mems_w,mems_h);
-      //      Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
+      //Interpreter interpreter(ref_image_img.cols,ref_image_img.rows);
 
-      Mat output(mems_h*3, mems_w*3, CV_64FC4, Scalar(0,0,0,255));
+      //    Mat output(mems_h*3, mems_w*3, CV_64FC(6), Scalar(0,0,0,255));
+
+      Mat output(mems_h*3, mems_w*3, CV_64FC(6));
 
       for(auto it = std::begin(mems_device._mems_mirrors_multi); it != std::end(mems_device._mems_mirrors_multi); ++it){
-        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
-        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[1]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[1];
-        output.at<Vec4d>(Point(it->_position.x,it->_position.y))[2]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[2];
+        output.at<Vec6d>(Point(it->_position.x,it->_position.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
+        output.at<Vec6d>(Point(it->_position.x,it->_position.y))[1]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[1];
+        output.at<Vec6d>(Point(it->_position.x,it->_position.y))[2]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[2];
         if((int)it->_position.x % 3 == 0||(int)it->_position.x % 3 == 2||(int)it->_position.y % 3 == 0||(int)it->_position.y % 3 == 2){
-          output.at<Vec4d>(Point(it->_position.x,it->_position.y))[3]= 122;
+          output.at<Vec6d>(Point(it->_position.x,it->_position.y))[3]= 122;
+        }
+        else{
+          output.at<Vec6d>(Point(it->_position.x,it->_position.y))[3]= 255;
+        }
+        output.at<Vec6d>(Point(it->_position.x,it->_position.y))[4]= it->_displayed_sample.x;
+        output.at<Vec6d>(Point(it->_position.x,it->_position.y))[5]= it->_displayed_sample.y;
+
+      }
+
+
+      std::fstream f;
+      f.open(rpf_name, std::ios::out);
+      f << "name of picture" << " " << "original-picture_width"  << " " << "original-picture_height"  << " "  << " has color depth of 32bit for r+b+g+alpha (4* 8bit)" <<"\n";
+      f << "RPF has"  << " "  << "Samples of original picture"  << " "  << "Multipixels have size of " << " " <<"\n";
+      for(int i = 0; i < output.rows; i++)
+      {
+          const Vec6d* Mi = output.ptr<Vec6d>(i);
+          for(int j = 0; j < output.cols; j++){
+        //  std::cout<<" i "<<i<<"  j "<<j<<"   DSy "<<Mi[j][5]<<"   DSx "<<Mi[j][4]<<" R "<<Mi[j][0]<<"   G "<<Mi[j][1]<<" B "<<Mi[j][2]<<"   A "<<Mi[j][3]<<"\n";
+          f<<" i "<<i<<"  j "<<j<<" DSy "<<Mi[j][5]<<" DSx "<<Mi[j][4]<<" R "<<Mi[j][0]<<" G "<<Mi[j][1]<<" B "<<Mi[j][2]<<" A "<<Mi[j][3]<<"\n";
+        }
+      }
+      f << "--- " << "\n";
+      f.close();
+
+      std::fstream f_bit;
+      f_bit.open("rpf_bit", std::ios::out);
+
+      f_bit << "name of picture: " << ref_image_name <<"\n";
+      f_bit << "Orig-pic_width"  << " 3000" << " Orig-pic_height"  << " 1930 "  << " has color depth of 32bit for r+b+g+alpha (4* 8bit)" <<"\n";
+      f_bit << "RPF has"  << " 16000 "  << "Samples of original picture"  << " "  << "Multipixels have size of " << "3*3" <<"\n";
+      f_bit << " RPF - width  "<< output.cols << " RPF - height "  << output.rows  << " "  <<"\n";
+      f_bit <<"\n";
+      {
+          std::cout << "name of picture: " << ref_image_name <<"\n";
+          std::cout << "Orig-pic_width"  << " 3000" << " Orig-pic_height"  << " 1930 "  << " has color depth of 32bit for r+b+g+alpha (4* 8bit)" <<"\n";
+          std::cout << "RPF has"  << " 16000 "  << "Samples of original picture"  << " "  << "Multipixels have size of " << "3*3" <<"\n";
+          std::cout << " RPF - width  "<< output.cols << " RPF - width  "<< output.cols.toHex() << " RPF - height "  << output.rows  << " "  <<"\n";
+          std::cout <<"\n";
+      }
+      for(int i = 0; i < output.rows; i++)
+      {
+          const Vec6d* Mi = output.ptr<Vec6d>(i);
+          for(int j = 0; j < output.cols; j++){
+        //  std::cout<<" i "<<i<<"  j "<<j<<"   DSy "<<Mi[j][5]<<"   DSx "<<Mi[j][4]<<" R "<<Mi[j][0]<<"   G "<<Mi[j][1]<<" B "<<Mi[j][2]<<"   A "<<Mi[j][3]<<"\n";
+          f_bit<<Mi[j][5].toHex()<<" "<<Mi[j][4]<<" "<<Mi[j][0]<<" "<<Mi[j][1]<<" "<<Mi[j][2]<<" "<<Mi[j][3]<<"\n";
+        }
+      }
+      f_bit << "--- " << "\n";
+      f_bit.close();
+/*
+      for(int i = 0; i<= output.rows(); i++){
+        for(int j = 0; j <= output.cols(); j++){
 
         }
       }
-
+*/
 
 
       Mat output2(2000, 3000, CV_64FC4, Scalar(0,0,0,0));
@@ -242,6 +302,19 @@ int main(int argc, char** argv )
           output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[3]= 255;
         }
       }
+
+
+      Mat output3(mems_h*3, mems_w*3, CV_64FC4, Scalar(0,0,0,255));
+      for(auto it = std::begin(mems_device._mems_mirrors_multi); it != std::end(mems_device._mems_mirrors_multi); ++it){
+        output3.at<Vec6d>(Point(it->_position.x,it->_position.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
+        output3.at<Vec6d>(Point(it->_position.x,it->_position.y))[1]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[1];
+        output3.at<Vec6d>(Point(it->_position.x,it->_position.y))[2]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[2];
+        if((int)it->_position.x % 3 == 0||(int)it->_position.x % 3 == 2||(int)it->_position.y % 3 == 0||(int)it->_position.y % 3 == 2){
+          output3.at<Vec6d>(Point(it->_position.x,it->_position.y))[3]= 122;
+        }
+      }
+
+
     /*  for(std::vector<Pixel_d>::iterator i = _Pattern.begin(); i != _Pattern.end(); ++i) {
           output.at<Vec3d>(Point((*i).x,(*i).y))[0]=(*i).color[0];
           output.at<Vec3d>(Point((*i).x,(*i).y))[1]=(*i).color[1];
@@ -266,7 +339,7 @@ int main(int argc, char** argv )
 
 */
       std::string name="basic_samples"+std::to_string(sample_amount)+ref_image_name;
-      imwrite("result_1"+name+".png",output);
+      imwrite("result_1"+name+".png",output3);
       imwrite("result_2"+name+".png",output2);
 
       std::cout<<"#Visualizing done!\n";

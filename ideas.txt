@@ -35,3 +35,17 @@ bei geringster nähe anfangen!
 -
 - Erweiterung:
   die Buckets anhand ihrer Entfernung zur pointposition in den container pushen
+
+
+
+Bildformat aufbau
+16bit       16bit       8bit+8bit+8bit+8bit         24bit         8bit            32bit
+o.größe x,  o.größe y , farbtiefe rgb+alpha 32bit , sampleanzahl, göße multipxel, number_of_samples
+
+
+24bit           16bit   16bit
+samplenumber    o.x     o.y
+
+
+24bit         8bit            8bit  8bit  8bit  8bit
+samplenumber  mulipixelpart   r     g     b     alpha

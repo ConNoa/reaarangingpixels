@@ -552,6 +552,7 @@ private:
   //FullHD Beamer Resolution
   int _Beamer_Resolution_x;
   int _Beamer_Resolution_y;
+  unsigned int _seed;
 
 
   int _X;
