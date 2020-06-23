@@ -3,14 +3,6 @@ Bildformat aufbau
 16bit       16bit       8bit+8bit+8bit+8bit         24bit             8bit            32bit
 o.größe x,  o.größe y , farbtiefe rgb+alpha 32bit , multipxel anzahl, größe multipxel, number_of_samples
 
-////-----------
-////-----------24bit           16bit   16bit
-////-----------samplenumber    o.x     o.y
-////-----------
-////-----------
-////-----------24bit         8bit            8bit  8bit  8bit  8bit
-////-----------samplenumber  mulipixelpart   r     g     b     alpha
-////-----------
 
 
 
@@ -33,9 +25,3 @@ X0Y2
 .
 .
 XnYm
-
-
-
-4HEX 4HEX 4*2HEX
-
-HHHH HHHH HHHHHHHH

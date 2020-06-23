@@ -201,7 +201,7 @@ int main(int argc, char** argv )
       mems_device.read_mirrors_with_samples_2(input2);
       mems_device.compare_by_id();
 
-  //    mems_device.print_informations();
+      //    mems_device.print_informations();
 
       for(auto it = std::begin(mems_device._mems_mirrors); it!= std::end(mems_device._mems_mirrors);++it){
         it->_position.x = (it->_position.x-3)/2;
@@ -257,7 +257,7 @@ int main(int argc, char** argv )
 
       std::fstream f_bit;
       f_bit.open("rpf_bit", std::ios::out);
-
+/*
       f_bit << "name of picture: " << ref_image_name <<"\n";
       f_bit << "Orig-pic_width"  << " 3000" << " Orig-pic_height"  << " 1930 "  << " has color depth of 32bit for r+b+g+alpha (4* 8bit)" <<"\n";
       f_bit << "RPF has"  << " 16000 "  << "Samples of original picture"  << " "  << "Multipixels have size of " << "3*3" <<"\n";
@@ -270,6 +270,7 @@ int main(int argc, char** argv )
           std::cout << " RPF - width  "<< output.cols << " RPF - width  "<< output.cols.toHex() << " RPF - height "  << output.rows  << " "  <<"\n";
           std::cout <<"\n";
       }
+
       for(int i = 0; i < output.rows; i++)
       {
           const Vec6d* Mi = output.ptr<Vec6d>(i);
@@ -280,17 +281,18 @@ int main(int argc, char** argv )
       }
       f_bit << "--- " << "\n";
       f_bit.close();
-/*
-      for(int i = 0; i<= output.rows(); i++){
-        for(int j = 0; j <= output.cols(); j++){
-
-        }
-      }
-*/
+      */
 
 
+      // ------------------------------------------------------------------------
+      // ------------------------------------------------------------------------
+      // ------------------------------------------------------------------------
+
+
+      // output2 stores data in a matrix of original picture_width & picture_height
+      // sample pixels are stored at original positions
+      // function for correct alpha value is not yet implemented as extra function in multipixels
       Mat output2(2000, 3000, CV_64FC4, Scalar(0,0,0,0));
-
       for(auto it = std::begin(mems_device._mems_mirrors_multi); it != std::end(mems_device._mems_mirrors_multi); ++it){
         output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
         output2.at<Vec4d>(Point(it->_displayed_sample.x,it->_displayed_sample.y))[1]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[1];
@@ -303,7 +305,9 @@ int main(int argc, char** argv )
         }
       }
 
-
+      // output3 stores data in a compressed way in matrix
+      // sample pixels are stored without space between
+      // function for correct alpha value is not yet implemented as extra function in multipixels
       Mat output3(mems_h*3, mems_w*3, CV_64FC4, Scalar(0,0,0,255));
       for(auto it = std::begin(mems_device._mems_mirrors_multi); it != std::end(mems_device._mems_mirrors_multi); ++it){
         output3.at<Vec6d>(Point(it->_position.x,it->_position.y))[0]= ref_image_img.at<Vec3d>(Point(it->_displayed_sample.x, it->_displayed_sample.y))[0];
