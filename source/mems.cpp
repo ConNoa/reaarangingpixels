@@ -22,7 +22,7 @@ class Mems{
     void compare_by_id();
     void compare_by_x_m();
 
-    void create_multipix();
+    void create_multipix(int size_of_multiPix = 3);
 
     void print_informations();
 
@@ -95,13 +95,13 @@ void Mems::compare_by_x_m(){
   std::sort(_mems_mirrors.begin(), _mems_mirrors.end(), compare_by_x);
 }
 
-void Mems::create_multipix(){
+void Mems::create_multipix(int size_of_multiPix){
   std::cout << " create multipix"<<"\n";
   int counter = 0;
   for(auto it = std::begin(_mems_mirrors); it!= std::end(_mems_mirrors); ++it){
     Mirror actual_mirror;
-    for(int i = 0; i < 3; ++i){
-      for(int j = 0; j <3; ++j){
+    for(int i = 0; i < size_of_multiPix; ++i){
+      for(int j = 0; j < size_of_multiPix; ++j){
 
         actual_mirror.id = counter;
         actual_mirror._position.x = it->_position.x+i;
