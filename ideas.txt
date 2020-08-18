@@ -49,3 +49,14 @@ samplenumber    o.x     o.y
 
 24bit         8bit            8bit  8bit  8bit  8bit
 samplenumber  mulipixelpart   r     g     b     alpha
+
+
+
+
+
+
+
+
+- pipeline sauber abbilden
+- aktivierbarkeit über commandline
+- parametereingabe über commandline

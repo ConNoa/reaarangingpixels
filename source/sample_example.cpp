@@ -53,6 +53,7 @@ void getdir (std::string dir, std::vector<std::string> &files)
 // 	the seperate vectors are stored in the pattern vector
 //
 //	-to visualize the output, the interpreter is used
+
 /*
 bool compareBy_xValue(const Pixel_d &a, const Pixel_d &b)
 {
@@ -187,8 +188,8 @@ int main(int argc, char** argv )
 
   // create new alpha_matrix with size of multipixel
   std::vector<std::vector<int>> alpha_matrix = alpha_value(size_of_multiPic);
-  
-  
+
+
   std::vector<std::string> files = std::vector<std::string>();                  //stores path to Ref-Images
   getdir(dir,files);
 
@@ -406,7 +407,7 @@ int main(int argc, char** argv )
         output2.at<Vec4d>(samp_pos)[0] = ref_image_img.at<Vec3d>(samp_pos)[0];
         output2.at<Vec4d>(samp_pos)[1] = ref_image_img.at<Vec3d>(samp_pos)[1];
         output2.at<Vec4d>(samp_pos)[2] = ref_image_img.at<Vec3d>(samp_pos)[2];
-        
+
         // std::cout<< "samp_x: "<< it->_displayed_sample.x << "      samp_y: "<< it->_displayed_sample.y << std::endl;
         // std::cout<< "pos_x: "<< it->_position.x << "      pos_y: "<< it->_position.y<< std::endl;
 
