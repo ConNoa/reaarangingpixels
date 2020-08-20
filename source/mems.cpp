@@ -219,11 +219,11 @@ void Mems::find_samples_next_to_mirror_fast(Portioner buckets){
 
     std::cout<<"looking for samples for mirror "<< mirrornumber<<" with "<<point_amm_in_cluster<<" Points in MirrorCluster"<<"\n";
 */
-while(x_y_distance<x_y_distance_max ){
-//  while(x_y_distance<x_y_distance_max || (selected_mirror->_matching_samples.size() < min_samples)){
+  while(x_y_distance<x_y_distance_max ){
+    //  while(x_y_distance<x_y_distance_max || (selected_mirror->_matching_samples.size() < min_samples)){
         selected_mirror->_matching_samples.clear();
         selected_mirror->_ammount_of_matching_samples = 0;
-  //      std::cout<<" x_y_distance = "<<x_y_distance<<"\n";
+        //      std::cout<<" x_y_distance = "<<x_y_distance<<"\n";
         for(auto cluster_part = std::begin(point_cluster); cluster_part!=std::end(point_cluster); ++cluster_part)
         {
           for(auto point_to_check = std::begin(*cluster_part); point_to_check != std::end(*cluster_part); ++point_to_check)
@@ -231,8 +231,8 @@ while(x_y_distance<x_y_distance_max ){
             //perform this actions for all Samples which are in bucket for mirror
 
 
-  //----> nicht nötig          //check, if ammount of needed samples is reached
-  //----> nicht nötig                     //not reached: suche mit der aktuellen sample_distance in den buckets nach reached samples
+            //----> nicht nötig          //check, if ammount of needed samples is reached
+            //----> nicht nötig                     //not reached: suche mit der aktuellen sample_distance in den buckets nach reached samples
                           //  wenn distance <= (maxdis^2)*2
                                 //  put distance to point struct
                                 //  push back point to selected mirror
