@@ -189,17 +189,37 @@ void Mems::find_samples_next_to_mirror(std::vector<Point_d> const& sampled_point
   }
 }
 */
+/*
+Die Methode "find_samples_next_to_mirror_fast"  verfolgt den Ansatz, dass jedem mirror ein passendes sample zugewiesen werden soll.
+die mirrors mit der geringsten anzahl an fitting samples bekommen zuerst ein sample zugewiesen. 
+
+zuerst legen wir eine "x_y_distance_max" fest. diese bestimmt, in welchem abstand sich ein sample vom mirror befinden darf, 
+damit es noch als ein valides, nahes sample gezählt wird. die distance habe ich durch probieren auf 20 gesetzt.
+wenn die distance zu klein ist, gibt es nicht für jeden mirror samples.
+wenn die distance zu groß ist, könnten die mems-spiegel den point evtl. nicht darstellen, weil er zu weit entfernt ist.
+
+es wird überprüft wieviele samples ein mirror darstellen kann. 
+
+Dabei sind die Samples die am nächsten am jeweiligen mirror sind, die wichtigsten/ sinnvolsten, und sollten auch zuerst eine rolle spielen.
+
+deswegen fängt die "x_y_distance" bei 5 an und wird im loop vergrößert bis hin zu "x_y_distance_max".
+
+Wenn ein mirror die anzahl von "max_samples" überschritten hat, oder gleich ihr ist, bedeutet das, dass auf dem spiegel vorerst ausreichend viele Samples dargestellt werden können.
+Damit werden andere Spiegel relevanter, auf denen sich unter Umständen nicht so viele Samples darstellen lassen.
+
+*/
+
 void Mems::find_samples_next_to_mirror_fast(Portioner buckets){
-  int minfittingsamples = 999999;           //DeBUG
-  int x_y_distance;
-  const int x_y_distance_max = 20;                //maximum Distance between Mirror and Sample for x and y
-  int not_matching_mirror_ammount = 0;      //DebUG needed?
+        int       minfittingsamples = 999999;           //DeBUG
+        int       x_y_distance;
+  const int       x_y_distance_max = 20;                //maximum Distance between Mirror and Sample for x and y
+        int       not_matching_mirror_ammount = 0;      //DebUG needed?
 
-  bool enough_samples;                      // needed?
-  int mirrornumber = 0;                     //ID
+        bool      enough_samples;                       // needed?
+        int       mirrornumber = 0;                     //ID
 
-  const int max_samples = 5; //max Ammount of needed Samples
-  const int min_samples = 2;
+  const int       max_samples = 5;                      //max Ammount of needed Samples
+  const int       min_samples = 2;
 
 
   //iterate selected_mirror all buckets
@@ -219,69 +239,67 @@ void Mems::find_samples_next_to_mirror_fast(Portioner buckets){
 
     std::cout<<"looking for samples for mirror "<< mirrornumber<<" with "<<point_amm_in_cluster<<" Points in MirrorCluster"<<"\n";
 */
-  while(x_y_distance<x_y_distance_max ){
-    //  while(x_y_distance<x_y_distance_max || (selected_mirror->_matching_samples.size() < min_samples)){
-        selected_mirror->_matching_samples.clear();
-        selected_mirror->_ammount_of_matching_samples = 0;
-        //      std::cout<<" x_y_distance = "<<x_y_distance<<"\n";
-        for(auto cluster_part = std::begin(point_cluster); cluster_part!=std::end(point_cluster); ++cluster_part)
-        {
-          for(auto point_to_check = std::begin(*cluster_part); point_to_check != std::end(*cluster_part); ++point_to_check)
+    while(x_y_distance<x_y_distance_max ){
+      //  while(x_y_distance<x_y_distance_max || (selected_mirror->_matching_samples.size() < min_samples)){
+          selected_mirror->_matching_samples.clear();
+          selected_mirror->_ammount_of_matching_samples = 0;
+          //      std::cout<<" x_y_distance = "<<x_y_distance<<"\n";
+          for(auto cluster_part = std::begin(point_cluster); cluster_part!=std::end(point_cluster); ++cluster_part)
           {
-            //perform this actions for all Samples which are in bucket for mirror
-
-
-            //----> nicht nötig          //check, if ammount of needed samples is reached
-            //----> nicht nötig                     //not reached: suche mit der aktuellen sample_distance in den buckets nach reached samples
-                          //  wenn distance <= (maxdis^2)*2
-                                //  put distance to point struct
-                                //  push back point to selected mirror
-                                //  incremet ammountof matching samples im selected mirror
-                                //  if ammount of matching samples = max_sample
-                                      // break, go to next mems_mirror
-
-            double sample_dis = pow(selected_mirror->_position.x-point_to_check->x , 2)+pow(selected_mirror->_position.y-point_to_check->y , 2);
-            if(sample_dis<=x_y_distance*x_y_distance*2)
+            for(auto point_to_check = std::begin(*cluster_part); point_to_check != std::end(*cluster_part); ++point_to_check)
             {
-              point_to_check->dis = sample_dis;
-              selected_mirror->_matching_samples.push_back(*point_to_check);
-              selected_mirror->_ammount_of_matching_samples = selected_mirror->_ammount_of_matching_samples +1;
-//              std::cout<<selected_mirror->_matching_samples.size()<<" ";
+              //perform this actions for all Samples which are in bucket for mirror
 
-              //std::cout << "break2 \n" ;
-            //  break;
 
+              //----> nicht nötig          //check, if ammount of needed samples is reached
+              //----> nicht nötig          //not reached: suche mit der aktuellen sample_distance in den buckets nach reached samples
+                                  //  wenn distance <= (maxdis^2)*2
+                                  //  put distance to point struct
+                                  //  push back point to selected mirror
+                                  //  incremet ammountof matching samples im selected mirror
+                                  //  if ammount of matching samples = max_sample
+                                  // break, go to next mems_mirror
+
+              double sample_dis = pow(selected_mirror->_position.x-point_to_check->x , 2)+pow(selected_mirror->_position.y-point_to_check->y , 2);
+              if(sample_dis<=x_y_distance*x_y_distance*2)
+              {
+                point_to_check->dis = sample_dis;
+                selected_mirror->_matching_samples.push_back(*point_to_check);
+                selected_mirror->_ammount_of_matching_samples = selected_mirror->_ammount_of_matching_samples +1;
+  //              std::cout<<selected_mirror->_matching_samples.size()<<" ";
+
+                //std::cout << "break2 \n" ;
+              //  break;
+
+              }
+          //  MAXSAMPLES:
             }
-        //  MAXSAMPLES:
+          }
+            if(selected_mirror->_matching_samples.size() >= max_samples){
+            //  goto MAXSAMPLES;
+            //    std::cout << "break1 \n" ;
+            break;
+            }
+            x_y_distance += 2;
+          }
+
+          if(selected_mirror->id % 10000 == 0)
+          {
+            int progress = (int)((double)selected_mirror->id/(double)_mems_mirrors.size()*100) ;
+            std::cout <<"Find samples for all Mems-Mirrors  "<< progress <<" % . \n";
+          }
+
+          if(minfittingsamples > selected_mirror->_matching_samples.size())
+          {
+            minfittingsamples = selected_mirror->_matching_samples.size();
+            //std::cout << "Minimal fitting samples sind jetzt " <<minfittingsamples<<"\n \n";
+          }
+          if(minfittingsamples == 0 && selected_mirror->_matching_samples.size()==0)
+          {
+            not_matching_mirror_ammount += 1;
           }
         }
-        if(selected_mirror->_matching_samples.size() >= max_samples){
-        //  goto MAXSAMPLES;
-//                std::cout << "break1 \n" ;
-        break;
-        }
-        x_y_distance += 2;
-      }
-//      std::cout << "\n" ;
-
-
-        if(selected_mirror->id % 10000 == 0)
-        {
-          int progress = (int)((double)selected_mirror->id/(double)_mems_mirrors.size()*100) ;
-          std::cout <<"Find samples for all Mems-Mirrors  "<< progress <<" % . \n";
-        }
-
-        if(minfittingsamples > selected_mirror->_matching_samples.size())
-        {
-          minfittingsamples = selected_mirror->_matching_samples.size();
-          //std::cout << "Minimal fitting samples sind jetzt " <<minfittingsamples<<"\n \n";
-        }
-        if(minfittingsamples == 0 && selected_mirror->_matching_samples.size()==0)
-        {
-          not_matching_mirror_ammount += 1;
-        }
-      }
-//      std::cout << "not matching mirrorammount =  " <<not_matching_mirror_ammount<<"\n";
+      //      std::cout << "not matching mirrorammount =  " <<not_matching_mirror_ammount<<"\n";
       std::cout << "All samples for Mirrors found"<< '\n';
 
       for(auto mirror = std::begin(_mems_mirrors); mirror != std::end(_mems_mirrors); ++mirror)
